@@ -5,8 +5,8 @@ class WordItem extends SimpleMapItem {
   String word;
   color currentColor;
   
-  color DEFAULT_COLOR = #cccccc;
-  color HIGHLIGHT_COLOR = #ffff99;
+  color DEFAULT_COLOR = 0xccCCCCCC; // first two digits is alpha
+  color HIGHLIGHT_COLOR = 0xffFFFF99;
 
   WordItem(String word) {
     this.word = word;

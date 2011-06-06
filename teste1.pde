@@ -102,7 +102,8 @@ void flipScreen() {
 //*******************************************************/
 
 void drawModelTreemap3D() {
-//  noStroke();
+//  stroke(0x33000000);
+  noStroke();
   lights();
   
   int i = 0;
