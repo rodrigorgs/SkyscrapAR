@@ -1,10 +1,8 @@
-
-
 /* Configuration options */
 int THRESHOLD = 80;
 int TREEMAP_WIDTH = 150;
 int TREEMAP_HEIGHT = 150;
-boolean FLIPPED_CAM = true;
+boolean FLIPPED_CAM = false;
 
 ///////////////////////////////////////////////////////
 import processing.video.*;
@@ -72,6 +70,7 @@ void setup() {
   cam=new Capture(this,640,480);
   nya=new MultiMarker(this,width,height,"camera_para.dat",nyarConf);
   nya.addARMarker("patt.hiro",80);
+  nya.addARMarker("patt.kanji",80);
   nya.setThreshold(THRESHOLD);
   myframe = new PImage(width, height, RGB);
 
@@ -102,8 +101,8 @@ void flipScreen() {
 //*******************************************************/
 
 void drawModelTreemap3D() {
-//  stroke(0x33000000);
-  noStroke();
+  stroke(0x33000000);
+//  noStroke();
   lights();
   
   int i = 0;
@@ -159,16 +158,23 @@ void draw()
 {
   if (cam.available() !=true) {
       return;
-  }
+  }  
   cam.read();
   nya.detect(cam);
   background(0);
+  
   nya.drawBackground(cam);
   if((nya.isExistMarker(0))){
     nya.beginTransform(0);
     drawModel();
     nya.endTransform();
   }
+  if((nya.isExistMarker(1))){
+    nya.beginTransform(1);
+    drawModelCube();
+    nya.endTransform();
+  }
+
   
   if (FLIPPED_CAM)
     flipScreen();
