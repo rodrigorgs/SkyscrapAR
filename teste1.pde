@@ -16,6 +16,9 @@ import unlekker.data.*;
 import unlekker.geom.*;
 // treemap
 import treemap.*;
+// picking
+import picking.*;
+
 
 Capture cam;
 MultiMarker nya;
@@ -31,6 +34,9 @@ FaceList poly;
 // Treemap
 Treemap map;
 WordMap mapModel;
+
+// picking
+Picker picker;
 
 void loadSTL() {
   stl = new STL(this, "Boxes.stl");
@@ -71,6 +77,7 @@ void setup() {
 
   loadSTL();
   loadTreemap();
+  picker = new Picker(this);
 }
 
 // Rodrigo, 2011-06-06
@@ -98,7 +105,9 @@ void drawModelTreemap3D() {
 //  noStroke();
   lights();
   
+  int i = 0;
   for (Mappable item : mapModel.getItems()) {
+    WordItem wordItem = (WordItem)item;
     Rect bounds = item.getBounds();
     float x = (float)(bounds.x + bounds.w / 2);
     float y = (float)(bounds.y + bounds.h / 2);
@@ -106,6 +115,8 @@ void drawModelTreemap3D() {
     
     pushMatrix();
     translate(x, y, z);
+    picker.start(i); i++;
+    fill(wordItem.currentColor);
     box((float)bounds.w, (float)bounds.h, 2*z);
     popMatrix();
 //    println(item.getSize());
@@ -138,9 +149,9 @@ void drawModelCube() {
 
 void drawModel() {
 //  drawModelCube();
-  drawModelSTL();
+//  drawModelSTL();
 //  drawModelTreemap();
-//  drawModelTreemap3D();
+  drawModelTreemap3D();
 }
 
 void draw()
@@ -151,7 +162,7 @@ void draw()
   cam.read();
   nya.detect(cam);
   background(0);
-  nya.drawBackground(cam);//frustumを考慮した背景描画
+  nya.drawBackground(cam);
   if((nya.isExistMarker(0))){
     nya.beginTransform(0);
     drawModel();
@@ -162,3 +173,18 @@ void draw()
     flipScreen();
 }
 
+// interaction
+void mouseClicked() {
+  int x = mouseX;
+  int y = mouseY;
+  if (FLIPPED_CAM)
+    x = width - x;
+    
+  int id = picker.get(x, y);
+  if (id > -1) {
+    WordItem item = (WordItem)mapModel.getItems()[id];
+    item.toggleSelect();
+//    cubes[id].changeColor();
+  }
+  
+}

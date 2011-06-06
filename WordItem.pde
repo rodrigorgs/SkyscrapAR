@@ -3,9 +3,21 @@
 
 class WordItem extends SimpleMapItem {
   String word;
+  color currentColor;
+  
+  color DEFAULT_COLOR = #cccccc;
+  color HIGHLIGHT_COLOR = #ffff99;
 
   WordItem(String word) {
     this.word = word;
+    this.currentColor = DEFAULT_COLOR;
+  }
+
+  void toggleSelect() {
+    if (this.currentColor == DEFAULT_COLOR)
+      this.currentColor = HIGHLIGHT_COLOR;
+    else
+      this.currentColor = DEFAULT_COLOR;
   }
 
   void draw() {
