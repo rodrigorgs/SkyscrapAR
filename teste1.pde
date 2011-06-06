@@ -101,10 +101,16 @@ void flipScreen() {
 //*******************************************************/
 
 void drawModelTreemap3D() {
-  stroke(0x33000000);
-//  noStroke();
   lights();
   
+  noStroke();
+  fill(#000033);
+  pushMatrix();
+  translate(0, 0, -12.0f);
+  box((float)TREEMAP_WIDTH, (float)TREEMAP_HEIGHT, 12.0f);
+  popMatrix();
+  
+  stroke(0x33000000);  
   int i = 0;
   for (Mappable item : mapModel.getItems()) {
     WordItem wordItem = (WordItem)item;
@@ -113,11 +119,12 @@ void drawModelTreemap3D() {
     float y = (float)(bounds.y + bounds.h / 2);
     float z = log((float)item.getSize()) * 5.0f;
     
+    float factor = 0.6;
     pushMatrix();
     translate(x, y, z);
     picker.start(i); i++;
     fill(wordItem.currentColor);
-    box((float)bounds.w, (float)bounds.h, 2*z);
+    box((float)bounds.w*factor, (float)bounds.h*factor, 2*z);
     popMatrix();
 //    println(item.getSize());
   }
