@@ -40,27 +40,26 @@ class ClassItem extends SimpleMapItem {
       this.currentColor = DEFAULT_COLOR;
   }
 
+  void boxWithBounds(double x, double y, double z, double w, double h, double zz, double baseRatio) {
+    float a = (float)(x + w/2);
+    float b = (float)(y + h/2);
+    float c = (float)(z + zz/2);
+    translate(a, b, c);
+    box((float)(w*baseRatio), (float)(h*baseRatio), (float)zz);
+    translate(-a, -b, -c);
+  }
+
   void draw() {
     Rect bounds = this.getBounds();
-    float x = (float)(bounds.x + bounds.w / 2);
-    float y = (float)(bounds.y + bounds.h / 2);
-    float z = log((float)this.getSize()) * 5.0f;
-    
-    float factor = 0.6;
-    
+    double zz = log((float)this.getSize()) * 5.0f;
+        
     fill(0x99ffffff);
-    pushMatrix();
-    translate(x, y, 0);
-    box((float)bounds.w*0.9, (float)bounds.h*0.9, 0.01);
-    popMatrix();
+    boxWithBounds(bounds.x, bounds.y, 0.0, bounds.w, bounds.h, 0.01, 0.9);
     
     if (!HIDE_NON_SELECTED || this.isSelected()) {
-      pushMatrix();
-      translate(x, y, z);
       picker.start(this.index);
       fill(this.currentColor);
-      box((float)bounds.w*factor, (float)bounds.h*factor, 2*z);
-      popMatrix();
+      boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, zz, 0.6);
     }
   }
 }

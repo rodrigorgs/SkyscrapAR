@@ -53,6 +53,9 @@ class PackageItem extends ClassItem implements MapModel {
     checkLayout();
     
     // TODO: draw the package (a quarter)
+    Rect bounds = this.getBounds();
+    fill(0xFFff0000);
+    boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, PACKAGE_HEIGHT, 1.0);
   
     for (int i = 0; i < items.length; i++) {
       items[i].draw();

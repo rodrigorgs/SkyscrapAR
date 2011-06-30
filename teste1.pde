@@ -13,6 +13,12 @@ int TREEMAP_WIDTH = 150;
 int TREEMAP_HEIGHT = 150;
 boolean HIDE_NON_SELECTED = false;
 
+double PACKAGE_HEIGHT = 10.0;
+
+// TODO:
+double PACKAGE_BASE_RATIO = 0.9;
+double CLASS_BASE_RATIO = 0.9;
+
 ////////////////////////////////////////////////////////
 ///////////////////// Imports //////////////////////////
 ////////////////////////////////////////////////////////
@@ -53,14 +59,14 @@ Picker picker;
 ////////////////////////////////////////////////////////
 
 void loadTreemap() {
-  XMLElement elem = new XMLElement(this, "test.xml");
-  mapModel = new PackageItem(null, elem, 0);
-    
   // different choices for the layout method
   //MapLayout algorithm = new SliceLayout(); // linhas finas
   //MapLayout algorithm = new StripTreemap(); // linhas finas subdivididas
   MapLayout algorithm = new PivotBySplitSize(); // default
   //MapLayout algorithm = new SquarifiedLayout();
+
+  XMLElement elem = new XMLElement(this, "test.xml");
+  mapModel = new PackageItem(null, elem, 0);
 
   map = new Treemap(mapModel, 0, 0, width, height);
   map.setLayout(algorithm);
