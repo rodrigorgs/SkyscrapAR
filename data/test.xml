@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="teste" from="1" to="3">
+	<package name="teste" maxloc="270">
+		<package name="ui" maxloc="53">
+			<class name="Button" maxloc="39">
+				<version number="1" loc="35"/>
+				<version number="2" loc="39"/>
+				<version number="3" loc="39"/>
+			</class>
+			<class name="Label" maxloc="14">
+				<version number="1" loc="12"/>
+				<version number="2" loc="14"/>
+				<version number="3" loc="14"/>
+			</class>
+		</package>
+		<package name="utils" maxloc="209">
+			<class name="Writer" maxloc="123">
+				<version number="1" loc="96"/>
+				<version number="2" loc="96"/>
+				<version number="3" loc="123"/>
+			</class>
+			<class name="Reader" maxloc="54">
+				<version number="1" loc="54"/>
+				<version number="2" loc="54"/>
+				<version number="3" loc="54"/>
+			</class>
+			<class name="FileReader" maxloc="32">
+				<version number="1" loc="32"/>
+				<version number="2" loc="32"/>
+				<version number="3" loc="32"/>
+			</class>
+		</package>
+		<class name="Main" maxloc="8">
+			<version number="1" loc="8"/>
+			<version number="2" loc="8"/>
+			<version number="3" loc="8"/>			
+		</class>
+	</package>
+</project>
