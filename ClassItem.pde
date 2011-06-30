@@ -34,16 +34,7 @@ class ClassItem extends SimpleMapItem {
       this.currentColor = DEFAULT_COLOR;
   }
 
-  void calcBox() {
-    boxLeft = zoomBounds.spanX(x, 0, width);
-    boxRight = zoomBounds.spanX(x+w, 0, width);
-    boxTop = zoomBounds.spanY(y, 0, height);
-    boxBottom = zoomBounds.spanY(y+h, 0, height);
-  }
-
   void draw() {
-    calcBox();
-    
     Rect bounds = this.getBounds();
     float x = (float)(bounds.x + bounds.w / 2);
     float y = (float)(bounds.y + bounds.h / 2);

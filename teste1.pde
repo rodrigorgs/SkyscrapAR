@@ -37,10 +37,6 @@ NyAR4PsgConfig nyarConf = NyAR4PsgConfig.CONFIG_PSG;
 //NyAR4PsgConfig nyarConf = new NyAR4PsgConfig(NyAR4PsgConfig.CS_RIGHT_HAND, NyAR4PsgConfig.TM_NYARTK);
 PImage myframe;
 
-// STL model
-STL stl;
-FaceList poly;
-
 // Treemap
 Treemap map;
 PackageItem mapModel;
@@ -52,29 +48,15 @@ TTS tts;
 // picking
 Picker picker;
 
-void loadSTL() {
-  stl = new STL(this, "Boxes.stl");
-  poly=stl.getPolyData();
-
-  poly.normalize(200); // normalize object to 400 radius
-  poly.center(); // center it around world origin
-}
-
 void loadTreemap() {
   XMLElement elem = new XMLElement(this, "test.xml");
   mapModel = new PackageItem(null, elem, 0);
     
-//  String[] lines = loadStrings("equator.txt");
-//  for (int i = 0; i < lines.length; i++) {
-//    mapModel.addWord(lines[i]);
-//  }
-//  mapModel.finishAdd();
-
-    // different choices for the layout method
-    //MapLayout algorithm = new SliceLayout(); // linhas finas
-    //MapLayout algorithm = new StripTreemap(); // linhas finas subdivididas
-    MapLayout algorithm = new PivotBySplitSize(); // default
-    //MapLayout algorithm = new SquarifiedLayout();
+  // different choices for the layout method
+  //MapLayout algorithm = new SliceLayout(); // linhas finas
+  //MapLayout algorithm = new StripTreemap(); // linhas finas subdivididas
+  MapLayout algorithm = new PivotBySplitSize(); // default
+  //MapLayout algorithm = new SquarifiedLayout();
 
   map = new Treemap(mapModel, 0, 0, width, height);
   map.setLayout(algorithm);
@@ -83,7 +65,6 @@ void loadTreemap() {
 
 void setup() {
   size(640,480,P3D);
-//  colorMode(RGB, 100);
   println(MultiMarker.VERSION);
   cam=new Capture(this,640,480);
   nya=new MultiMarker(this,width,height,"camera_para.dat",nyarConf);
@@ -95,7 +76,6 @@ void setup() {
 
   println("default confidence: " + MultiMarker.DEFAULT_CF_THRESHOLD);
 
-  loadSTL();
   loadTreemap();
   picker = new Picker(this);
   
@@ -125,65 +105,15 @@ void flipScreen() {
 
 void drawXmlTreemap3D() {
   lights();
-  map.draw();
-  noLights();
-}
-
-void drawModelTreemap3D() {
-  lights();
-  
   noStroke();
-  fill(#000033);
+  
   pushMatrix();
   translate(0, 0, -12.0f);
   box((float)TREEMAP_WIDTH, (float)TREEMAP_HEIGHT, 12.0f);
   popMatrix();
   
-  stroke(0x33000000);  
-  int i = 0;
-  for (Mappable item : mapModel.getItems()) {
-    WordItem wordItem = (WordItem)item;
-    
-    Rect bounds = item.getBounds();
-    float x = (float)(bounds.x + bounds.w / 2);
-    float y = (float)(bounds.y + bounds.h / 2);
-    float z = log((float)item.getSize()) * 5.0f;
-    
-    float factor = 0.6;
-    
-    fill(0x99ffffff);
-    pushMatrix();
-    translate(x, y, 0);
-    box((float)bounds.w*0.9, (float)bounds.h*0.9, 0.01);
-    popMatrix();
-    
-    if (!HIDE_NON_SELECTED || wordItem.isSelected()) {
-      pushMatrix();
-      translate(x, y, z);
-      picker.start(i); i++;
-      fill(wordItem.currentColor);
-      box((float)bounds.w*factor, (float)bounds.h*factor, 2*z);
-      popMatrix();
-    }
-//    println(item.getSize());
-  }
-  
-  noLights();
-}
-
-void drawModelTreemap() {
-  if (FLIPPED_CAM)
-    rotateX(radians(180));
-    
+  stroke(0x33000000);
   map.draw();
-}
-
-void drawModelSTL() {
-  noStroke();
-  lights();
-  fill(0, 200, 255, 128);
-  poly.draw(this);
-  
   noLights();
 }
 
@@ -195,9 +125,6 @@ void drawModelCube() {
 
 void drawModel() {
 //  drawModelCube();
-//  drawModelSTL();
-//  drawModelTreemap();
-//  drawModelTreemap3D();
   drawXmlTreemap3D();
 }
 
@@ -267,11 +194,10 @@ void mouseClicked() {
     
   int id = picker.get(x, y);
   if (id > -1) {
-    WordItem item = (WordItem)mapModel.getItems()[id];
-    println(item.word);
-    tts.speak("JUnitTest. " + item.word);
-    item.toggleSelect();
-//    cubes[id].changeColor();
+//    WordItem item = (WordItem)mapModel.getItems()[id];
+//    println(item.word);
+//    tts.speak("JUnitTest. " + item.word);
+//    item.toggleSelect();
   }
   
 }

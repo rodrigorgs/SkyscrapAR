@@ -38,8 +38,7 @@ class PackageItem extends ClassItem implements MapModel {
   
   void checkLayout() {
     if (!layoutValid) {
-      // DEBUG
-      print("bounds: " + bounds.toString());
+      // good place to write debug code.
       
       if (getItemCount() != 0) {
         algorithm.layout(this, bounds);
@@ -50,7 +49,7 @@ class PackageItem extends ClassItem implements MapModel {
   
   void draw() {
     checkLayout();
-    calcBox();
+    
     // TODO: draw the package (a quarter)
   
     for (int i = 0; i < items.length; i++) {
