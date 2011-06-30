@@ -4,7 +4,9 @@ class ClassItem extends SimpleMapItem {
   float boxRight, boxBottom;
   
   color currentColor;
-  int index;
+  int index = -1;
+  String type;
+  String name;
   
   PackageItem parent;
   int level;
@@ -14,10 +16,14 @@ class ClassItem extends SimpleMapItem {
   color HIGHLIGHT_COLOR = 0xffFFFF99;
 
   ClassItem(PackageItem parent, XMLElement elem, int level) {
+    this.type = "class";
     this.parent = parent;
     this.xmlElement = elem;
     this.level = level;
-    this.index = globalIndex++;
+    this.index = g_treemapItems.size();
+    this.name = elem.getString("name");
+    
+    g_treemapItems.add(this);
     setSize(elem.getInt("maxloc"));
     
     this.currentColor = DEFAULT_COLOR;

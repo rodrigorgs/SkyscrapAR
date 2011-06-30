@@ -5,6 +5,8 @@ class PackageItem extends ClassItem implements MapModel {
     
   public PackageItem(PackageItem parent, XMLElement folder, int level) {
     super(parent, folder, level);
+    
+    this.type = "package";
 
     XMLElement[] contents = folder.getChildren();
     items = new Mappable[contents.length];

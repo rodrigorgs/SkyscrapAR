@@ -1,4 +1,7 @@
-/* Configuration options */
+////////////////////////////////////////////////////////
+/////////// Configuration Variables ////////////////////
+////////////////////////////////////////////////////////
+
 int THRESHOLD = 110;
 double CONFIDENCE_THRESHOLD = 0.51; // default: 0.51
 boolean DEBUG = false;
@@ -6,30 +9,28 @@ boolean DEBUG = false;
 boolean DRAW_MODELS = true;
 boolean FLIPPED_CAM = false;
 
-// treemap
 int TREEMAP_WIDTH = 150;
 int TREEMAP_HEIGHT = 150;
 boolean HIDE_NON_SELECTED = false;
 
-///////////////////////////////////////////////////////
-import guru.ttslib.*;
+////////////////////////////////////////////////////////
+///////////////////// Imports //////////////////////////
+////////////////////////////////////////////////////////
 
+import guru.ttslib.*;
 import processing.video.*;
 import jp.nyatla.nyar4psg.*;
-// opengl
-//import processing.opengl.*;
-// load STL models
-import unlekker.data.*;
-import unlekker.geom.*;
-// treemap
 import treemap.*;
-// picking
 import picking.*;
+//import processing.opengl.*;
 
-////////
+////////////////////////////////////////////////////////
+/////////// Global Variables ///////////////////////////
+////////////////////////////////////////////////////////
+
 PMatrix3D lastMatrix = new PMatrix3D();
 
-///////////
+// NyAR4Psg
 Capture cam;
 MultiMarker nya;
 PFont font=createFont("FFScala", 32);
@@ -41,12 +42,15 @@ PImage myframe;
 Treemap map;
 PackageItem mapModel;
 int globalIndex = 0;
+LinkedList<ClassItem> g_treemapItems = new LinkedList<ClassItem>();
 
-// tts
+// misc
 TTS tts;
-
-// picking
 Picker picker;
+
+////////////////////////////////////////////////////////
+////////////////// Functions ///////////////////////////
+////////////////////////////////////////////////////////
 
 void loadTreemap() {
   XMLElement elem = new XMLElement(this, "test.xml");
@@ -194,12 +198,13 @@ void mouseClicked() {
     
   int id = picker.get(x, y);
   if (id > -1) {
-//    WordItem item = (WordItem)mapModel.getItems()[id];
-//    println(item.word);
-//    tts.speak("JUnitTest. " + item.word);
-//    item.toggleSelect();
-  }
-  
+    ClassItem item = g_treemapItems.get(id);
+    if (!item.type.equals("package")) {
+      item.toggleSelect();
+      print(item.name);
+//      tts.speak(item.name);
+    }
+  }  
 }
 
 void updateThreshold(int newThreshold) {
