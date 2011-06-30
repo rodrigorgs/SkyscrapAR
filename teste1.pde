@@ -2,6 +2,7 @@
 TODO list
 =========
 - Take greater height as a reference height
+- Highlight classes that were changed in the last version
 */
 
 ////////////////////////////////////////////////////////
@@ -54,6 +55,8 @@ Treemap map;
 PackageItem mapModel;
 int globalIndex = 0;
 LinkedList<ClassItem> g_treemapItems = new LinkedList<ClassItem>();
+int g_currentVersion = 1;
+int maxVersion = -1;
 
 // misc
 TTS tts;
@@ -72,6 +75,7 @@ void loadTreemap() {
 
   XMLElement elem = new XMLElement(this, "test.xml");
   mapModel = new PackageItem(null, elem, 0);
+  maxVersion = elem.getInt("to");
 
   map = new Treemap(mapModel, 0, 0, width, height);
   map.setLayout(algorithm);
@@ -246,6 +250,11 @@ void keyPressed() {
   else if (key == '-') {
     updateThreshold(THRESHOLD - 5);
   }
-  
+  else if (key == '.' && g_currentVersion < maxVersion) {
+    g_currentVersion++;
+  }
+  else if (key == ',' && g_currentVersion > 1) {
+    g_currentVersion--;
+  }
   
 } 

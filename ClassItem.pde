@@ -62,7 +62,9 @@ class ClassItem extends SimpleMapItem {
       picker.start(this.index);
       fill(this.currentColor);
       // box for selected version
-      boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, zz, CLASS_BASE_RATIO);
+      int currentLoc = xmlElement.getChild(g_currentVersion - 1).getInt("loc");
+      double currentFactor = currentLoc / this.getSize();
+      boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, zz, CLASS_BASE_RATIO * currentFactor);
     }
   }
 }
