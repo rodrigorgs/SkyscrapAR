@@ -51,15 +51,18 @@ class ClassItem extends SimpleMapItem {
 
   void draw() {
     Rect bounds = this.getBounds();
-    double zz = log((float)this.getSize()) * 5.0f;
-        
+    double zz = this.getSize() * 1.0;
+    
+    stroke(0);
     fill(0x99ffffff);
-    boxWithBounds(bounds.x, bounds.y, 0.0, bounds.w, bounds.h, 0.01, 0.9);
+    // box for largest version
+    boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, 0.01, CLASS_BASE_RATIO);
     
     if (!HIDE_NON_SELECTED || this.isSelected()) {
       picker.start(this.index);
       fill(this.currentColor);
-      boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, zz, 0.6);
+      // box for selected version
+      boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, zz, CLASS_BASE_RATIO);
     }
   }
 }

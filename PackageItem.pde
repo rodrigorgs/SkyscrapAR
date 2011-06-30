@@ -38,12 +38,18 @@ class PackageItem extends ClassItem implements MapModel {
   
   /* Drawing */
   
+  Rect rectRatio(Rect rect, double ratio) {
+    double deltaw = rect.w * (1 - ratio)/2;
+    double deltah = rect.h * (1 - ratio)/2;
+    return new Rect(rect.x + deltaw, rect.y + deltah, rect.w*ratio, rect.h*ratio);
+  }
+  
   void checkLayout() {
     if (!layoutValid) {
       // good place to write debug code.
       
       if (getItemCount() != 0) {
-        algorithm.layout(this, bounds);
+        algorithm.layout(this, rectRatio(bounds, PACKAGE_BASE_RATIO));
       }
       layoutValid = true;
     }
@@ -54,8 +60,10 @@ class PackageItem extends ClassItem implements MapModel {
     
     // TODO: draw the package (a quarter)
     Rect bounds = this.getBounds();
-    fill(0xFFff0000);
-    boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, PACKAGE_HEIGHT, 1.0);
+    fill(1.0 - level * 0.2, 0.0, 0.0, 0.0);
+    stroke(0);
+//    fill(0xFFff0000);
+    boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, PACKAGE_HEIGHT, PACKAGE_BASE_RATIO);
   
     for (int i = 0; i < items.length; i++) {
       items[i].draw();

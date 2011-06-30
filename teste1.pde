@@ -1,8 +1,14 @@
+/*
+TODO list
+=========
+- Take greater height as a reference height
+*/
+
 ////////////////////////////////////////////////////////
 /////////// Configuration Variables ////////////////////
 ////////////////////////////////////////////////////////
 
-int THRESHOLD = 110;
+int THRESHOLD = 85; //110;
 double CONFIDENCE_THRESHOLD = 0.51; // default: 0.51
 boolean DEBUG = false;
 
@@ -13,11 +19,10 @@ int TREEMAP_WIDTH = 150;
 int TREEMAP_HEIGHT = 150;
 boolean HIDE_NON_SELECTED = false;
 
-double PACKAGE_HEIGHT = 10.0;
+double PACKAGE_HEIGHT = 2.0;
 
-// TODO:
-double PACKAGE_BASE_RATIO = 0.9;
-double CLASS_BASE_RATIO = 0.9;
+double PACKAGE_BASE_RATIO = 0.95;
+double CLASS_BASE_RATIO = 0.90;
 
 ////////////////////////////////////////////////////////
 ///////////////////// Imports //////////////////////////
@@ -125,6 +130,8 @@ void drawXmlTreemap3D() {
   stroke(0x33000000);
   map.draw();
   noLights();
+  
+  picker.start(g_treemapItems.size() + 50);
 }
 
 void drawModelCube() {
@@ -203,13 +210,13 @@ void mouseClicked() {
     x = width - x;
     
   int id = picker.get(x, y);
-  if (id > -1) {
+  if (id > -1 && id < g_treemapItems.size()) {
     ClassItem item = g_treemapItems.get(id);
-    if (!item.type.equals("package")) {
+//    if (!item.type.equals("package")) {
       item.toggleSelect();
-      print(item.name);
+      println("" + id + ": " + item.name + " level=" + item.level);
 //      tts.speak(item.name);
-    }
+//    }
   }  
 }
 
