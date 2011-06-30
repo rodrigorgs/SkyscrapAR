@@ -1,10 +1,19 @@
 /* Configuration options */
-int THRESHOLD = 80;
-int TREEMAP_WIDTH = 150;
-int TREEMAP_HEIGHT = 150;
+int THRESHOLD = 110;
+double CONFIDENCE_THRESHOLD = 0.51; // default: 0.51
+boolean DEBUG = false;
+
+boolean DRAW_MODELS = true;
 boolean FLIPPED_CAM = false;
 
+// treemap
+int TREEMAP_WIDTH = 150;
+int TREEMAP_HEIGHT = 150;
+boolean HIDE_NON_SELECTED = false;
+
 ///////////////////////////////////////////////////////
+import guru.ttslib.*;
+
 import processing.video.*;
 import jp.nyatla.nyar4psg.*;
 // opengl
@@ -17,7 +26,10 @@ import treemap.*;
 // picking
 import picking.*;
 
+////////
+PMatrix3D lastMatrix = new PMatrix3D();
 
+///////////
 Capture cam;
 MultiMarker nya;
 PFont font=createFont("FFScala", 32);
@@ -31,7 +43,11 @@ FaceList poly;
 
 // Treemap
 Treemap map;
-WordMap mapModel;
+PackageItem mapModel;
+int globalIndex = 0;
+
+// tts
+TTS tts;
 
 // picking
 Picker picker;
@@ -45,38 +61,45 @@ void loadSTL() {
 }
 
 void loadTreemap() {
-  mapModel = new WordMap();
+  XMLElement elem = new XMLElement(this, "test.xml");
+  mapModel = new PackageItem(null, elem, 0);
     
-  String[] lines = loadStrings("equator.txt");
-  for (int i = 0; i < lines.length; i++) {
-    mapModel.addWord(lines[i]);
-  }
-  mapModel.finishAdd();
+//  String[] lines = loadStrings("equator.txt");
+//  for (int i = 0; i < lines.length; i++) {
+//    mapModel.addWord(lines[i]);
+//  }
+//  mapModel.finishAdd();
 
     // different choices for the layout method
-    //MapLayout algorithm = new SliceLayout();
-    //MapLayout algorithm = new StripTreemap();
-    //MapLayout algorithm = new PivotBySplitSize();
+    //MapLayout algorithm = new SliceLayout(); // linhas finas
+    //MapLayout algorithm = new StripTreemap(); // linhas finas subdivididas
+    MapLayout algorithm = new PivotBySplitSize(); // default
     //MapLayout algorithm = new SquarifiedLayout();
 
   map = new Treemap(mapModel, 0, 0, width, height);
+  map.setLayout(algorithm);
   map.updateLayout(-TREEMAP_WIDTH/2, -TREEMAP_HEIGHT/2, TREEMAP_WIDTH, TREEMAP_HEIGHT);
 }
 
 void setup() {
   size(640,480,P3D);
-  colorMode(RGB, 100);
+//  colorMode(RGB, 100);
   println(MultiMarker.VERSION);
   cam=new Capture(this,640,480);
   nya=new MultiMarker(this,width,height,"camera_para.dat",nyarConf);
-  nya.addARMarker("patt.hiro",80);
+  nya.addARMarker("patt.sample1",80);
   nya.addARMarker("patt.kanji",80);
   nya.setThreshold(THRESHOLD);
+  nya.setConfidenceThreshold(CONFIDENCE_THRESHOLD);
   myframe = new PImage(width, height, RGB);
+
+  println("default confidence: " + MultiMarker.DEFAULT_CF_THRESHOLD);
 
   loadSTL();
   loadTreemap();
   picker = new Picker(this);
+  
+  tts = new TTS();
 }
 
 // Rodrigo, 2011-06-06
@@ -100,6 +123,12 @@ void flipScreen() {
 // Drawing
 //*******************************************************/
 
+void drawXmlTreemap3D() {
+  lights();
+  map.draw();
+  noLights();
+}
+
 void drawModelTreemap3D() {
   lights();
   
@@ -114,18 +143,28 @@ void drawModelTreemap3D() {
   int i = 0;
   for (Mappable item : mapModel.getItems()) {
     WordItem wordItem = (WordItem)item;
+    
     Rect bounds = item.getBounds();
     float x = (float)(bounds.x + bounds.w / 2);
     float y = (float)(bounds.y + bounds.h / 2);
     float z = log((float)item.getSize()) * 5.0f;
     
     float factor = 0.6;
+    
+    fill(0x99ffffff);
     pushMatrix();
-    translate(x, y, z);
-    picker.start(i); i++;
-    fill(wordItem.currentColor);
-    box((float)bounds.w*factor, (float)bounds.h*factor, 2*z);
+    translate(x, y, 0);
+    box((float)bounds.w*0.9, (float)bounds.h*0.9, 0.01);
     popMatrix();
+    
+    if (!HIDE_NON_SELECTED || wordItem.isSelected()) {
+      pushMatrix();
+      translate(x, y, z);
+      picker.start(i); i++;
+      fill(wordItem.currentColor);
+      box((float)bounds.w*factor, (float)bounds.h*factor, 2*z);
+      popMatrix();
+    }
 //    println(item.getSize());
   }
   
@@ -150,15 +189,16 @@ void drawModelSTL() {
 
 void drawModelCube() {
   fill(0,0,255);
-  translate(0,0,20);
-  box(40);
+  translate(0,0,2.5);
+  box(600, 600, 5);
 }
 
 void drawModel() {
 //  drawModelCube();
 //  drawModelSTL();
 //  drawModelTreemap();
-  drawModelTreemap3D();
+//  drawModelTreemap3D();
+  drawXmlTreemap3D();
 }
 
 void draw()
@@ -170,15 +210,46 @@ void draw()
   nya.detect(cam);
   background(0);
   
-  nya.drawBackground(cam);
+  if (DEBUG) {
+    loadPixels();
+    for (int i = 0; i < width*height; i++) {
+      color c = cam.pixels[i];
+      if (brightness(c) > THRESHOLD)
+        pixels[i] = #FFFFFF;
+      else
+        pixels[i] = #000000;
+    }
+    updatePixels();
+  }
+  else {
+    nya.drawBackground(cam);
+  }
+  
   if((nya.isExistMarker(0))){
+    lastMatrix = nya.getMarkerMatrix(0);
     nya.beginTransform(0);
-    drawModel();
+    if (DRAW_MODELS)
+      drawModel();
     nya.endTransform();
   }
+  else {
+    pushMatrix();
+    resetMatrix();
+    applyMatrix(lastMatrix.m00, lastMatrix.m01, lastMatrix.m02, lastMatrix.m03,
+    lastMatrix.m10, lastMatrix.m11, lastMatrix.m12, lastMatrix.m13,
+    lastMatrix.m20, lastMatrix.m21, lastMatrix.m22, lastMatrix.m23,
+    lastMatrix.m30, lastMatrix.m31, lastMatrix.m32, lastMatrix.m33
+    );
+    if (DRAW_MODELS)
+      drawModel();
+
+    popMatrix();
+  }
+  
   if((nya.isExistMarker(1))){
     nya.beginTransform(1);
-    drawModelCube();
+    if (DRAW_MODELS)
+      drawModelCube();
     nya.endTransform();
   }
 
@@ -197,8 +268,40 @@ void mouseClicked() {
   int id = picker.get(x, y);
   if (id > -1) {
     WordItem item = (WordItem)mapModel.getItems()[id];
+    println(item.word);
+    tts.speak("JUnitTest. " + item.word);
     item.toggleSelect();
 //    cubes[id].changeColor();
   }
   
 }
+
+void updateThreshold(int newThreshold) {
+  if (newThreshold > 255)
+    THRESHOLD = 255;
+  else if (newThreshold < 0)
+    THRESHOLD = 0;
+  else   
+    THRESHOLD = newThreshold;
+  nya.setThreshold(THRESHOLD);
+  
+  println("New THRESHOLD = " + THRESHOLD);
+}
+
+void keyPressed() {
+  if (key == 'd')
+    DEBUG = !DEBUG;
+  else if (key == 'm')
+    DRAW_MODELS = !DRAW_MODELS;
+  else if (key == 'h') {
+    HIDE_NON_SELECTED = !HIDE_NON_SELECTED;
+  }
+  else if (key == '+' || key == '=') {
+    updateThreshold(THRESHOLD + 5);
+  }
+  else if (key == '-') {
+    updateThreshold(THRESHOLD - 5);
+  }
+  
+  
+} 

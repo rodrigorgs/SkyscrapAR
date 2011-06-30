@@ -13,6 +13,10 @@ class WordItem extends SimpleMapItem {
     this.currentColor = DEFAULT_COLOR;
   }
 
+  boolean isSelected() {
+    return this.currentColor == HIGHLIGHT_COLOR;
+  }
+
   void toggleSelect() {
     if (this.currentColor == DEFAULT_COLOR)
       this.currentColor = HIGHLIGHT_COLOR;
