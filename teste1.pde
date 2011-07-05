@@ -40,6 +40,8 @@ double CLASS_MIN_HEIGHT = 10.0;
 
 boolean HIGHLIGHT_CHANGES_IS_CUMULATIVE = false;
 
+double TWEENING_TIME_INTERVAL = 1000; // milliseconds
+
 ////////////////////////////////////////////////////////
 ///////////////////// Imports //////////////////////////
 ////////////////////////////////////////////////////////
@@ -72,6 +74,7 @@ int globalIndex = 0;
 LinkedList<ClassItem> g_treemapItems = new LinkedList<ClassItem>();
 int g_currentVersion = 1;
 int g_firstVersion = 1;
+double g_tweeningVersion = g_currentVersion;
 int maxVersion = -1;
 
 // misc
@@ -165,8 +168,32 @@ void drawModel() {
   drawXmlTreemap3D();
 }
 
+//////////////// tweening //////////////////////////
+
+int startTime = 0;
+double startTweeningVersion = g_tweeningVersion;
+
+void tweenVersion() {
+  int time = millis();
+  double progress = (time - startTime) / TWEENING_TIME_INTERVAL;
+  if (progress > 1.0)
+    progress = 1.0;
+    
+  g_tweeningVersion = progress*(g_currentVersion) + (1 - progress)*(startTweeningVersion);
+}
+
+void setCurrentVersion(int v) {
+  g_currentVersion = v;
+  startTime = millis();
+  startTweeningVersion = g_tweeningVersion;
+}
+
+////////////////////////////////////////////////////
+
+
 void draw()
 {
+  tweenVersion();
   if (cam.available() !=true) {
       return;
   }  
@@ -267,10 +294,10 @@ void keyPressed() {
     updateThreshold(THRESHOLD - 5);
   }
   else if (key == '.' && g_currentVersion < maxVersion) {
-    g_currentVersion++;
+    setCurrentVersion(g_currentVersion + 1);
   }
   else if (key == ',' && g_currentVersion > 1) {
-    g_currentVersion--;
+    setCurrentVersion(g_currentVersion - 1);
   }
   else if (key == 'c') {
     HIGHLIGHT_CHANGES_IS_CUMULATIVE = !HIGHLIGHT_CHANGES_IS_CUMULATIVE;
