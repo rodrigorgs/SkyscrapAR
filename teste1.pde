@@ -1,7 +1,8 @@
 /*
 TODO list
 =========
-- BUG: sometimes we select the board and it selects a class (Label)
+- BUG: Sometimes we select the board and it selects a class (Label)
+- BUG: When marker disappears, the model zooms out
 - Maybe try mrbola speech
 
 
@@ -301,10 +302,12 @@ void mouseClicked() {
 
 void speak(String name) {
   String hyphenatedName = "";
+  int i = 0;
   for (char c : name.toCharArray()) {
-    if (c > 'A' && c < 'Z')
+    if (i > 0 && c > 'A' && c < 'Z')
       hyphenatedName += "-";
     hyphenatedName += c;
+    i++;
   }
   
   println("Speak " + hyphenatedName);
