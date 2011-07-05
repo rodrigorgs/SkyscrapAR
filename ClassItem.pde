@@ -80,6 +80,21 @@ class ClassItem extends SimpleMapItem {
       return false;
     }
   }
+  
+  double getIntBetweenVersions(String attr, double version) {
+    int version1 = floor((float)version);
+    int version2 = ceil((float)version);
+    double alpha = version - version1;
+    
+    int value1 = getVersion(version1).getInt(attr);
+    int value2 = getVersion(version2).getInt(attr);
+    
+    return (1-alpha)*value1 + alpha*value2;
+  }
+  
+  double getCurrentTweenInt(String attr) {
+    return getIntBetweenVersions(attr,  g_tweeningVersion);
+  }
 
   void draw() {
     Rect bounds = this.getBounds();
@@ -90,10 +105,10 @@ class ClassItem extends SimpleMapItem {
     boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, 0.01, CLASS_BASE_RATIO);
     
     if (!HIDE_NON_SELECTED || this.isSelected()) {
-      XMLElement current = getCurrentVersion(); 
+      XMLElement current = getCurrentVersion();
       XMLElement first = getFirstVersion();
-      double boxHeight = 1.0 * (CLASS_MIN_HEIGHT + (current.getInt("sumchurn") - first.getInt("sumchurn"))); 
-      int currentLoc = current.getInt("loc");
+      double boxHeight = 1.0 * (CLASS_MIN_HEIGHT + (getCurrentTweenInt("sumchurn") - first.getInt("sumchurn"))); 
+      double currentLoc = getCurrentTweenInt("loc");
       double currentFactor = currentLoc / getMaxLoc();
       if (currentLoc == 0) {
         return;

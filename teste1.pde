@@ -1,7 +1,6 @@
 /*
 TODO list
 =========
-- Use tweening to animate version change
 - Take greater height as a reference height
 - Handle new classes and disappearing classes
 - Write name of hover class on some kind of title bar
@@ -13,7 +12,7 @@ DONE
   - height = sum(churns) from v[i+1] to v[j] minus churn(v[i])
 - Highlight classes that were changed in the last version
   - Also: classes changed between first and last version
-
+- Use tweening to animate version change
 */
 
 ////////////////////////////////////////////////////////
