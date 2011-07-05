@@ -3,13 +3,20 @@ TODO list
 =========
 - Take greater height as a reference height
 - Highlight classes that were changed in the last version
+  - Also: classes changed between first and last version
+- Use churn as height
+  - height = sum(churns) from v[i+1] to v[j] minus churn(v[i])
+- Use tweening to animate version change
+- Handle new classes and disappearing classes
+- Write name of hover class on some kind of title bar
+- Speak class name (split words with hyphen)
 */
 
 ////////////////////////////////////////////////////////
 /////////// Configuration Variables ////////////////////
 ////////////////////////////////////////////////////////
 
-int THRESHOLD = 85; //110;
+int THRESHOLD = 45; //85; //110;
 double CONFIDENCE_THRESHOLD = 0.51; // default: 0.51
 boolean DEBUG = false;
 
@@ -24,6 +31,8 @@ double PACKAGE_HEIGHT = 2.0;
 
 double PACKAGE_BASE_RATIO = 0.95;
 double CLASS_BASE_RATIO = 0.90;
+
+double CLASS_MIN_HEIGHT = 10.0;
 
 ////////////////////////////////////////////////////////
 ///////////////////// Imports //////////////////////////
@@ -56,6 +65,7 @@ PackageItem mapModel;
 int globalIndex = 0;
 LinkedList<ClassItem> g_treemapItems = new LinkedList<ClassItem>();
 int g_currentVersion = 1;
+int g_firstVersion = 1;
 int maxVersion = -1;
 
 // misc

@@ -48,10 +48,25 @@ class ClassItem extends SimpleMapItem {
     box((float)(w*baseRatio), (float)(h*baseRatio), (float)zz);
     translate(-a, -b, -c);
   }
+  
+  XMLElement getVersion(int version) {
+    return xmlElement.getChild(version - 1);
+  }
+  
+  XMLElement getFirstVersion() {
+    return getVersion(g_firstVersion);
+  }
+  
+  XMLElement getCurrentVersion() {
+    return getVersion(g_currentVersion);
+  }
+
+  double getMaxLoc() {
+    return this.getSize();
+  }
 
   void draw() {
     Rect bounds = this.getBounds();
-    double zz = this.getSize() * 1.0;
     
     stroke(0);
     fill(0x99ffffff);
@@ -59,12 +74,19 @@ class ClassItem extends SimpleMapItem {
     boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, 0.01, CLASS_BASE_RATIO);
     
     if (!HIDE_NON_SELECTED || this.isSelected()) {
+      XMLElement current = getCurrentVersion(); 
+      XMLElement first = getFirstVersion();
+      double boxHeight = 1.0 * (CLASS_MIN_HEIGHT + (current.getInt("sumchurn") - first.getInt("sumchurn"))); 
+      int currentLoc = current.getInt("loc");
+      double currentFactor = currentLoc / getMaxLoc();
+      if (currentLoc == 0) {
+        return;
+      }
+      
       picker.start(this.index);
       fill(this.currentColor);
       // box for selected version
-      int currentLoc = xmlElement.getChild(g_currentVersion - 1).getInt("loc");
-      double currentFactor = currentLoc / this.getSize();
-      boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, zz, CLASS_BASE_RATIO * currentFactor);
+      boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, boxHeight, CLASS_BASE_RATIO * currentFactor);
     }
   }
 }
