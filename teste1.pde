@@ -3,8 +3,6 @@ TODO list
 =========
 - BUG: Sometimes we select the board and it selects a class (Label)
 - BUG: When marker disappears, the model zooms out
-- Maybe try mrbola speech
-
 
 DONE
 ====
@@ -16,6 +14,7 @@ DONE
 - Take greater height as a reference height
 - Write name of hover class on some kind of title bar
 - Speak class name (split words with hyphen)
+- Maybe try mrbola speech (Didn't work, only noise is produced).
 */
 
 ////////////////////////////////////////////////////////
