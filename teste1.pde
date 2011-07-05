@@ -1,8 +1,8 @@
 /*
 TODO list
 =========
-- BUG: text is blinking
-- Handle new classes and disappearing classes
+- BUG: sometimes we select the board and it selects a class (Label)
+- BUG: Base is black
 - Speak class name (split words with hyphen)
 
 DONE
@@ -152,19 +152,19 @@ void flipScreen() {
 //*******************************************************/
 
 void drawXmlTreemap3D() {
+  picker.start(32767);
   lights();
   noStroke();
   
   pushMatrix();
   translate(0, 0, -12.0f);
+  fill(128);
   box((float)TREEMAP_WIDTH, (float)TREEMAP_HEIGHT, 12.0f);
   popMatrix();
   
   stroke(0x33000000);
   map.draw();
   noLights();
-  
-  picker.start(g_treemapItems.size() + 50);
 }
 
 void drawModelCube() {
@@ -204,8 +204,6 @@ void setCurrentVersion(int v) {
 void draw()
 {
   tweenVersion();
-  fill(0, 0, 0);
-  text(titleString, 10, 32);
   
   if (cam.available() !=true) {
       return;
@@ -260,6 +258,9 @@ void draw()
   
   if (FLIPPED_CAM)
     flipScreen();
+    
+  fill(0, 0, 0);
+  text(titleString, 10, 32);
 }
 
 // interaction
