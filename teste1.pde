@@ -2,7 +2,8 @@
 TODO list
 =========
 - BUG: sometimes we select the board and it selects a class (Label)
-- Speak class name (split words with hyphen)
+- Maybe try mrbola speech
+
 
 DONE
 ====
@@ -13,6 +14,7 @@ DONE
 - Use tweening to animate version change
 - Take greater height as a reference height
 - Write name of hover class on some kind of title bar
+- Speak class name (split words with hyphen)
 */
 
 ////////////////////////////////////////////////////////
@@ -80,12 +82,12 @@ double g_tweeningVersion = g_currentVersion;
 double g_maxChurn = 0;
 int maxVersion = -1;
 
-// status
-String titleString = "";
-
 // misc
 TTS tts;
+Announcer announcer = null;
+String titleString = "";
 Picker picker;
+
 
 ////////////////////////////////////////////////////////
 ////////////////// Functions ///////////////////////////
@@ -291,9 +293,23 @@ void mouseClicked() {
 //    if (!item.type.equals("package")) {
       item.toggleSelect();
       println("" + id + ": " + item.name + " level=" + item.level);
-//      tts.speak(item.name);
+      if (item.isSelected())
+        speak(item.name);
 //    }
   }  
+}
+
+void speak(String name) {
+  String hyphenatedName = "";
+  for (char c : name.toCharArray()) {
+    if (c > 'A' && c < 'Z')
+      hyphenatedName += "-";
+    hyphenatedName += c;
+  }
+  
+  println("Speak " + hyphenatedName);
+  announcer = new Announcer(hyphenatedName);
+  announcer.start();
 }
 
 void updateThreshold(int newThreshold) {

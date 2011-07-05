@@ -14,12 +14,12 @@
 			</class>
 		</package>
 		<package name="utils">
-			<class name="Writer" maxloc="123">
+			<class name="HTMLWriter" maxloc="123">
 				<version number="1" loc="96" changed="1" sumchurn="96"/>
 				<version number="2" loc="96" sumchurn="96"/>
 				<version number="3" loc="123" changed="1" sumchurn="150"/>
 			</class>
-			<class name="Reader" maxloc="54">
+			<class name="JUnitReader" maxloc="54">
 				<version number="1" loc="54" changed="1" sumchurn="54"/>
 				<version number="2" loc="54" changed="1" sumchurn="60"/>
 				<version number="3" loc="54" sumchurn="60"/>
