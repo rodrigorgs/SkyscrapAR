@@ -2,7 +2,6 @@
 TODO list
 =========
 - BUG: sometimes we select the board and it selects a class (Label)
-- BUG: Base is black
 - Speak class name (split words with hyphen)
 
 DONE
