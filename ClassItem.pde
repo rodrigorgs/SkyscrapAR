@@ -65,6 +65,22 @@ class ClassItem extends SimpleMapItem {
     return this.getSize();
   }
 
+  boolean hasChanged() {
+    if (g_currentVersion == g_firstVersion)
+      return false;
+      
+    if (!HIGHLIGHT_CHANGES_IS_CUMULATIVE) {
+      return getCurrentVersion().getInt("changed") != 0;
+    }
+    else {
+      for (int i = g_firstVersion + 1; i <= g_currentVersion; i++) {
+        if (getVersion(i).getInt("changed") != 0)
+          return true;
+      }
+      return false;
+    }
+  }
+
   void draw() {
     Rect bounds = this.getBounds();
     
@@ -82,6 +98,8 @@ class ClassItem extends SimpleMapItem {
       if (currentLoc == 0) {
         return;
       }
+      
+      strokeWeight(hasChanged() ? 4 : 1);
       
       picker.start(this.index);
       fill(this.currentColor);

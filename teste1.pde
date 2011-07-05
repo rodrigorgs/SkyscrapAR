@@ -1,15 +1,19 @@
 /*
 TODO list
 =========
-- Take greater height as a reference height
-- Highlight classes that were changed in the last version
-  - Also: classes changed between first and last version
-- Use churn as height
-  - height = sum(churns) from v[i+1] to v[j] minus churn(v[i])
 - Use tweening to animate version change
+- Take greater height as a reference height
 - Handle new classes and disappearing classes
 - Write name of hover class on some kind of title bar
 - Speak class name (split words with hyphen)
+
+DONE
+====
+- Use churn as height
+  - height = sum(churns) from v[i+1] to v[j] minus churn(v[i])
+- Highlight classes that were changed in the last version
+  - Also: classes changed between first and last version
+
 */
 
 ////////////////////////////////////////////////////////
@@ -33,6 +37,8 @@ double PACKAGE_BASE_RATIO = 0.95;
 double CLASS_BASE_RATIO = 0.90;
 
 double CLASS_MIN_HEIGHT = 10.0;
+
+boolean HIGHLIGHT_CHANGES_IS_CUMULATIVE = false;
 
 ////////////////////////////////////////////////////////
 ///////////////////// Imports //////////////////////////
@@ -266,5 +272,7 @@ void keyPressed() {
   else if (key == ',' && g_currentVersion > 1) {
     g_currentVersion--;
   }
-  
+  else if (key == 'c') {
+    HIGHLIGHT_CHANGES_IS_CUMULATIVE = !HIGHLIGHT_CHANGES_IS_CUMULATIVE;
+  }
 } 
