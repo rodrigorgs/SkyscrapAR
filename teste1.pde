@@ -36,6 +36,7 @@ double PACKAGE_BASE_RATIO = 0.95;
 double CLASS_BASE_RATIO = 0.90;
 
 double CLASS_MIN_HEIGHT = 10.0;
+double CLASS_MAX_HEIGHT = (TREEMAP_WIDTH + TREEMAP_HEIGHT) * 0.6;
 
 boolean HIGHLIGHT_CHANGES_IS_CUMULATIVE = false;
 
@@ -74,6 +75,7 @@ LinkedList<ClassItem> g_treemapItems = new LinkedList<ClassItem>();
 int g_currentVersion = 1;
 int g_firstVersion = 1;
 double g_tweeningVersion = g_currentVersion;
+double g_maxChurn = 0;
 int maxVersion = -1;
 
 // misc

@@ -26,6 +26,12 @@ class ClassItem extends SimpleMapItem {
     g_treemapItems.add(this);
     setSize(elem.getInt("maxloc"));
     
+    for (XMLElement version : elem.getChildren()) {
+      int churn = version.getInt("sumchurn");
+      if (churn > g_maxChurn)
+        g_maxChurn = churn;
+    }
+    
     this.currentColor = DEFAULT_COLOR;
   }
 
@@ -107,7 +113,8 @@ class ClassItem extends SimpleMapItem {
     if (!HIDE_NON_SELECTED || this.isSelected()) {
       XMLElement current = getCurrentVersion();
       XMLElement first = getFirstVersion();
-      double boxHeight = 1.0 * (CLASS_MIN_HEIGHT + (getCurrentTweenInt("sumchurn") - first.getInt("sumchurn"))); 
+      double churn = getCurrentTweenInt("sumchurn") - first.getInt("sumchurn");
+      double boxHeight = CLASS_MIN_HEIGHT + (churn / g_maxChurn) * CLASS_MAX_HEIGHT; 
       double currentLoc = getCurrentTweenInt("loc");
       double currentFactor = currentLoc / getMaxLoc();
       if (currentLoc == 0) {
