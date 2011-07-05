@@ -1,9 +1,8 @@
 /*
 TODO list
 =========
-- Take greater height as a reference height
+- BUG: text is blinking
 - Handle new classes and disappearing classes
-- Write name of hover class on some kind of title bar
 - Speak class name (split words with hyphen)
 
 DONE
@@ -13,6 +12,8 @@ DONE
 - Highlight classes that were changed in the last version
   - Also: classes changed between first and last version
 - Use tweening to animate version change
+- Take greater height as a reference height
+- Write name of hover class on some kind of title bar
 */
 
 ////////////////////////////////////////////////////////
@@ -57,12 +58,14 @@ import picking.*;
 /////////// Global Variables ///////////////////////////
 ////////////////////////////////////////////////////////
 
+PFont font;
+
 PMatrix3D lastMatrix = new PMatrix3D();
 
 // NyAR4Psg
 Capture cam;
 MultiMarker nya;
-PFont font=createFont("FFScala", 32);
+//PFont font=createFont("FFScala", 32);
 NyAR4PsgConfig nyarConf = NyAR4PsgConfig.CONFIG_PSG;
 //NyAR4PsgConfig nyarConf = new NyAR4PsgConfig(NyAR4PsgConfig.CS_RIGHT_HAND, NyAR4PsgConfig.TM_NYARTK);
 PImage myframe;
@@ -77,6 +80,9 @@ int g_firstVersion = 1;
 double g_tweeningVersion = g_currentVersion;
 double g_maxChurn = 0;
 int maxVersion = -1;
+
+// status
+String titleString = "";
 
 // misc
 TTS tts;
@@ -119,6 +125,9 @@ void setup() {
   picker = new Picker(this);
   
   tts = new TTS();
+  
+  font = loadFont("Menlo-Bold-32.vlw");
+  textFont(font);
 }
 
 // Rodrigo, 2011-06-06
@@ -195,6 +204,9 @@ void setCurrentVersion(int v) {
 void draw()
 {
   tweenVersion();
+  fill(0, 0, 0);
+  text(titleString, 10, 32);
+  
   if (cam.available() !=true) {
       return;
   }  
@@ -251,6 +263,22 @@ void draw()
 }
 
 // interaction
+void mouseMoved() {
+  int x = mouseX;
+  int y = mouseY;
+  if (FLIPPED_CAM)
+    x = width - x;
+    
+  int id = picker.get(x, y);
+  if (id > -1 && id < g_treemapItems.size()) {
+    ClassItem item = g_treemapItems.get(id);
+    titleString = item.name;
+  }
+  else {
+    titleString = "";
+  }
+}
+
 void mouseClicked() {
   int x = mouseX;
   int y = mouseY;
