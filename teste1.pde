@@ -102,7 +102,7 @@ void loadTreemap() {
 
   XMLElement elem = new XMLElement(this, "test.xml");
   mapModel = new PackageItem(null, elem, 0);
-  maxVersion = elem.getInt("to");
+  maxVersion = elem.getInt("lastVersion");
 
   map = new Treemap(mapModel, 0, 0, width, height);
   map.setLayout(algorithm);

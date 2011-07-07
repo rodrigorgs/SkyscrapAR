@@ -4,9 +4,13 @@ class PackageItem extends ClassItem implements MapModel {
   boolean layoutValid;
     
   public PackageItem(PackageItem parent, XMLElement folder, int level) {
-    super(parent, folder, level);
-    
+//    super(parent, folder, level);
     this.type = "package";
+    this.parent = parent;
+    this.level = level;
+    this.index = g_treemapItems.size();
+    this.name = folder.getString("name");    
+    g_treemapItems.add(this);
 
     XMLElement[] contents = folder.getChildren();
     items = new Mappable[contents.length];

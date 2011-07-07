@@ -1,12 +1,13 @@
 
 class ClassItem extends SimpleMapItem {
-  float boxLeft, boxTop;
-  float boxRight, boxBottom;
-  
   color currentColor;
   int index = -1;
   String type;
   String name;
+  
+  int[] churns;
+  int[] locs;
+  int[] changeds;
   
   PackageItem parent;
   int level;
@@ -14,6 +15,9 @@ class ClassItem extends SimpleMapItem {
   
   color DEFAULT_COLOR = 0xccCCCCCC; // first two digits is alpha
   color HIGHLIGHT_COLOR = 0xffFFFF99;
+
+  ClassItem() {
+  }
 
   ClassItem(PackageItem parent, XMLElement elem, int level) {
     this.type = "class";
@@ -24,13 +28,46 @@ class ClassItem extends SimpleMapItem {
     this.name = elem.getString("name");
     
     g_treemapItems.add(this);
-    setSize(elem.getInt("maxloc"));
     
-    for (XMLElement version : elem.getChildren()) {
-      int churn = version.getInt("sumchurn");
-      if (churn > g_maxChurn)
-        g_maxChurn = churn;
+    int maxloc = 0;
+    XMLElement[] versions = elem.getChildren();
+    int lastVersion = versions[versions.length-1].getInt("num");
+    println("lastVersion = " + lastVersion);
+    
+    locs = new int[lastVersion];
+    churns = new int[lastVersion];
+    changeds = new int[lastVersion];
+    
+    println("Loading " + this.name);
+    
+    int lastNum = -1;
+    int lastLoc = 0;
+    int lastChurn = 0;
+    for (XMLElement version : versions) {
+      int num = version.getInt("num") - 1;
+      
+      locs[num] = version.getInt("curr_loc");
+      churns[num] = version.getInt("churn");
+      changeds[num] = 1; //version.getInt("changed");
+      
+      for (int i = lastNum+1; i < num; i++) {
+        locs[i] = lastLoc;
+        churns[i] = lastChurn;
+        changeds[i] = 0;
+      }
+      
+      lastNum = num;
+      lastLoc = locs[num];
+      lastChurn = churns[num];
+      
+      if (lastLoc > maxloc)
+        maxloc = lastLoc;
+        
+      if (lastChurn > g_maxChurn)
+        g_maxChurn = lastChurn;
     }
+    
+    setSize(maxloc);
     
     this.currentColor = DEFAULT_COLOR;
   }
@@ -55,18 +92,6 @@ class ClassItem extends SimpleMapItem {
     translate(-a, -b, -c);
   }
   
-  XMLElement getVersion(int version) {
-    return xmlElement.getChild(version - 1);
-  }
-  
-  XMLElement getFirstVersion() {
-    return getVersion(g_firstVersion);
-  }
-  
-  XMLElement getCurrentVersion() {
-    return getVersion(g_currentVersion);
-  }
-
   double getMaxLoc() {
     return this.getSize();
   }
@@ -76,15 +101,33 @@ class ClassItem extends SimpleMapItem {
       return false;
       
     if (!HIGHLIGHT_CHANGES_IS_CUMULATIVE) {
-      return getCurrentVersion().getInt("changed") != 0;
+      return getIntBetweenVersions("changed", g_currentVersion) != 0;
     }
     else {
       for (int i = g_firstVersion + 1; i <= g_currentVersion; i++) {
-        if (getVersion(i).getInt("changed") != 0)
+        if (getIntBetweenVersions("changed", i) != 0)
           return true;
       }
       return false;
     }
+  }
+  
+  int getIntForVersion(String attr, int version) {
+    version = version - 1;
+    if (version > locs.length - 1) {
+      version = locs.length - 1;
+    }
+    
+    if (attr.equals("curr_loc"))
+      return locs[version];
+    else if (attr.equals("churn"))
+      return churns[version];
+    else if (attr.equals("changed"))
+      return changeds[version];
+    else
+      throw new RuntimeException("Error");
+      
+//    return getVersion(version).getInt(attr);
   }
   
   double getIntBetweenVersions(String attr, double version) {
@@ -92,8 +135,8 @@ class ClassItem extends SimpleMapItem {
     int version2 = ceil((float)version);
     double alpha = version - version1;
     
-    int value1 = getVersion(version1).getInt(attr);
-    int value2 = getVersion(version2).getInt(attr);
+    int value1 = getIntForVersion(attr, version1);
+    int value2 = getIntForVersion(attr, version2);
     
     return (1-alpha)*value1 + alpha*value2;
   }
@@ -111,11 +154,9 @@ class ClassItem extends SimpleMapItem {
     boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, 0.01, CLASS_BASE_RATIO);
     
     if (!HIDE_NON_SELECTED || this.isSelected()) {
-      XMLElement current = getCurrentVersion();
-      XMLElement first = getFirstVersion();
-      double churn = getCurrentTweenInt("sumchurn") - first.getInt("sumchurn");
+      double churn = getCurrentTweenInt("churn") - getIntBetweenVersions("churn", g_firstVersion);
       double boxHeight = CLASS_MIN_HEIGHT + (churn / g_maxChurn) * CLASS_MAX_HEIGHT; 
-      double currentLoc = getCurrentTweenInt("loc");
+      double currentLoc = getCurrentTweenInt("curr_loc");
       double currentFactor = currentLoc / getMaxLoc();
       if (currentLoc == 0) {
         return;
