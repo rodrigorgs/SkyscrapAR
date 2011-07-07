@@ -14,7 +14,7 @@ class ClassItem extends SimpleMapItem {
   int level;
   XMLElement xmlElement;
   
-  color DEFAULT_COLOR = 0xccCCCCCC; // first two digits is alpha
+  color DEFAULT_COLOR = 0xffCCCCCC; // first two digits is alpha
   color HIGHLIGHT_COLOR = 0xffFFFF99;
 
   ClassItem() {
@@ -119,16 +119,21 @@ class ClassItem extends SimpleMapItem {
   
   int getIntForVersion(String attr, int version) {
     version = version - 1;
-    if (version > locs.length - 1) {
-      version = locs.length - 1;
+    int v = version;
+    if (v > locs.length - 1) {
+      v = locs.length - 1;
     }
     
     if (attr.equals("curr_loc"))
-      return locs[version];
+      return locs[v];
     else if (attr.equals("churn"))
-      return churns[version];
-    else if (attr.equals("changed"))
-      return changeds[version];
+      return churns[v];
+    else if (attr.equals("changed")) {
+      if (version > locs.length)
+        return 0;
+      else
+        return changeds[v];
+    }
     else
       throw new RuntimeException("Error");
       
@@ -154,7 +159,7 @@ class ClassItem extends SimpleMapItem {
     Rect bounds = this.getBounds();
     
     stroke(0);
-    fill(0x99ffffff);
+    fill(0x999999);
     // box for largest version
     boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, 0.01, CLASS_BASE_RATIO);
     
@@ -170,7 +175,7 @@ class ClassItem extends SimpleMapItem {
       strokeWeight(hasChanged() ? 2.5 : 1);
       
       picker.start(this.index);
-      fill(this.currentColor);
+      fill(hasChanged() ? 0xff990000 : this.currentColor);
       // box for selected version
       boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, boxHeight, CLASS_BASE_RATIO * currentFactor);
     }

@@ -24,7 +24,7 @@ DONE
 /////////// Configuration Variables ////////////////////
 ////////////////////////////////////////////////////////
 
-int THRESHOLD = 45; //85; //110;
+int THRESHOLD = 85; //45; //85; //110;
 double CONFIDENCE_THRESHOLD = 0.51; // default: 0.51
 boolean DEBUG = false;
 
@@ -62,14 +62,14 @@ import picking.*;
 /////////// Global Variables ///////////////////////////
 ////////////////////////////////////////////////////////
 
-PFont font;
+//PFont font;
 
 PMatrix3D lastMatrix = new PMatrix3D();
 
 // NyAR4Psg
 Capture cam;
 MultiMarker nya;
-//PFont font=createFont("FFScala", 32);
+PFont font=createFont("FFScala", 32);
 NyAR4PsgConfig nyarConf = NyAR4PsgConfig.CONFIG_PSG;
 //NyAR4PsgConfig nyarConf = new NyAR4PsgConfig(NyAR4PsgConfig.CS_RIGHT_HAND, NyAR4PsgConfig.TM_NYARTK);
 PImage myframe;
@@ -130,7 +130,6 @@ void setup() {
   
   tts = new TTS();
   
-  font = loadFont("Menlo-Bold-32.vlw");
   textFont(font);
 }
 
@@ -197,9 +196,16 @@ void tweenVersion() {
 }
 
 void setCurrentVersion(int v) {
-  g_currentVersion = v;
-  startTime = millis();
-  startTweeningVersion = g_tweeningVersion;
+  if (v < 1)
+    v = 1;
+  else if (v > maxVersion)
+    v = maxVersion;
+    
+  if (g_currentVersion != v) {
+    g_currentVersion = v;
+    startTime = millis();
+    startTweeningVersion = g_tweeningVersion;
+  }
 }
 
 ////////////////////////////////////////////////////
@@ -265,6 +271,7 @@ void draw()
     
   fill(0, 0, 0);
   text(titleString, 10, 32);
+  text("" + g_currentVersion, 10, height - 5);
 }
 
 // interaction
@@ -343,12 +350,19 @@ void keyPressed() {
   else if (key == '-') {
     updateThreshold(THRESHOLD - 5);
   }
-  else if (key == '.' && g_currentVersion < maxVersion) {
+  else if (key == '.') {
     setCurrentVersion(g_currentVersion + 1);
   }
-  else if (key == ',' && g_currentVersion > 1) {
+  else if (key == ',') {
     setCurrentVersion(g_currentVersion - 1);
   }
+    else if (key == '>') {
+    setCurrentVersion(g_currentVersion + 10);
+  }
+  else if (key == '<') {
+    setCurrentVersion(g_currentVersion - 10);
+  }
+
   else if (key == 'c') {
     HIGHLIGHT_CHANGES_IS_CUMULATIVE = !HIGHLIGHT_CHANGES_IS_CUMULATIVE;
   }
