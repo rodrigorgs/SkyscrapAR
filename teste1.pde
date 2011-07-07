@@ -6,6 +6,8 @@ TODO list
 - Button to zoom in (change treemap size)
 - Show commit status together with version number
 - Show class metrics (loc, churn)
+- Show package name on mouse over
+- Show package name together with classname
 
 DONE
 ====
@@ -28,6 +30,7 @@ int THRESHOLD = 85; //45; //85; //110;
 double CONFIDENCE_THRESHOLD = 0.51; // default: 0.51
 boolean DEBUG = false;
 
+boolean USE_CAM = false;
 boolean DRAW_MODELS = true;
 boolean FLIPPED_CAM = false;
 
@@ -37,8 +40,8 @@ boolean HIDE_NON_SELECTED = false;
 
 double PACKAGE_HEIGHT = 2.0;
 
-double PACKAGE_BASE_RATIO = 0.95;
-double CLASS_BASE_RATIO = 0.90;
+double PACKAGE_BASE_RATIO = 0.90;
+double CLASS_BASE_RATIO = 0.85;
 
 double CLASS_MIN_HEIGHT = 10.0;
 double CLASS_MAX_HEIGHT = (TREEMAP_WIDTH + TREEMAP_HEIGHT) * 0.6;
@@ -46,6 +49,7 @@ double CLASS_MAX_HEIGHT = (TREEMAP_WIDTH + TREEMAP_HEIGHT) * 0.6;
 boolean HIGHLIGHT_CHANGES_IS_CUMULATIVE = false;
 
 double TWEENING_TIME_INTERVAL = 1000; // milliseconds
+float zoomFactor = 1.0;
 
 ////////////////////////////////////////////////////////
 ///////////////////// Imports //////////////////////////
@@ -64,7 +68,7 @@ import picking.*;
 
 //PFont font;
 
-PMatrix3D lastMatrix = new PMatrix3D();
+PMatrix3D lastMatrix = new PMatrix3D(0.03271547,-0.9987524,0.037727464,7.3349524,0.9948697,0.028926386,-0.09694087,6.203373,0.0957286,0.040705375,0.99457484,-279.99384,0.0,0.0,0.0,1.0);
 
 // NyAR4Psg
 Capture cam;
@@ -115,7 +119,8 @@ void loadTreemap() {
 void setup() {
   size(640,480,P3D);
   println(MultiMarker.VERSION);
-  cam=new Capture(this,640,480);
+  if (USE_CAM)
+    cam=new Capture(this,640,480);
   nya=new MultiMarker(this,width,height,"camera_para.dat",nyarConf);
   nya.addARMarker("patt.sample1",80);
   nya.addARMarker("patt.kanji",80);
@@ -177,6 +182,7 @@ void drawModelCube() {
 }
 
 void drawModel() {
+  applyZoom(zoomFactor);
 //  drawModelCube();
   drawXmlTreemap3D();
 }
@@ -210,13 +216,51 @@ void setCurrentVersion(int v) {
 
 ////////////////////////////////////////////////////
 
+void applyZoom(float s) {
+  applyMatrix(
+    s, 0, 0, 0,
+    0, s, 0, 0,
+    0, 0, s, 0,
+    0, 0, 0, 1);
+}
+
+void drawOnLastMarker() {
+    pushMatrix();
+    resetMatrix();
+    
+    applyMatrix(lastMatrix.m00, lastMatrix.m01, lastMatrix.m02, lastMatrix.m03,
+    lastMatrix.m10, lastMatrix.m11, lastMatrix.m12, lastMatrix.m13,
+    lastMatrix.m20, lastMatrix.m21, lastMatrix.m22, lastMatrix.m23,
+    lastMatrix.m30, lastMatrix.m31, lastMatrix.m32, lastMatrix.m33
+    );
+
+    applyZoom(1.75);
+    
+    if (DRAW_MODELS)
+      drawModel();
+
+    popMatrix();
+}
+
+void drawText() {
+  fill(0, 0, 0);
+  text(titleString, 10, 32);
+  text("" + g_currentVersion, 10, height - 5);
+
+}
 
 void draw()
 {
   tweenVersion();
   
-  if (cam.available() !=true) {
-      return;
+  if (!USE_CAM) {
+    background(255);
+    drawOnLastMarker();
+    drawText();
+    return;
+  }
+  else if (cam.available() !=true) {
+    return;
   }  
   cam.read();
   nya.detect(cam);
@@ -245,17 +289,7 @@ void draw()
     nya.endTransform();
   }
   else {
-    pushMatrix();
-    resetMatrix();
-    applyMatrix(lastMatrix.m00, lastMatrix.m01, lastMatrix.m02, lastMatrix.m03,
-    lastMatrix.m10, lastMatrix.m11, lastMatrix.m12, lastMatrix.m13,
-    lastMatrix.m20, lastMatrix.m21, lastMatrix.m22, lastMatrix.m23,
-    lastMatrix.m30, lastMatrix.m31, lastMatrix.m32, lastMatrix.m33
-    );
-    if (DRAW_MODELS)
-      drawModel();
-
-    popMatrix();
+    drawOnLastMarker();
   }
   
   if((nya.isExistMarker(1))){
@@ -268,10 +302,8 @@ void draw()
   
   if (FLIPPED_CAM)
     flipScreen();
-    
-  fill(0, 0, 0);
-  text(titleString, 10, 32);
-  text("" + g_currentVersion, 10, height - 5);
+
+  drawText();    
 }
 
 // interaction
@@ -336,6 +368,20 @@ void updateThreshold(int newThreshold) {
   println("New THRESHOLD = " + THRESHOLD);
 }
 
+void setZoomFactor(float factor) {
+  if (factor < 0.1)
+    factor = 0.1;
+  else if (factor > 30.0)
+    factor = 5.0;
+    
+  zoomFactor = factor;
+  println("zoom = " + zoomFactor);
+}
+
+void incZoomFactor(float amount) {
+  setZoomFactor(zoomFactor + amount);
+}
+
 void keyPressed() {
   if (key == 'd')
     DEBUG = !DEBUG;
@@ -362,8 +408,13 @@ void keyPressed() {
   else if (key == '<') {
     setCurrentVersion(g_currentVersion - 10);
   }
-
   else if (key == 'c') {
     HIGHLIGHT_CHANGES_IS_CUMULATIVE = !HIGHLIGHT_CHANGES_IS_CUMULATIVE;
+  }
+  else if (key == 'z') {
+    incZoomFactor(0.1);
+  }
+  else if (key == 'Z') {
+    incZoomFactor(-0.1);
   }
 } 

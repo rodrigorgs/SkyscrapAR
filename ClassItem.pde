@@ -158,10 +158,11 @@ class ClassItem extends SimpleMapItem {
   void draw() {
     Rect bounds = this.getBounds();
     
-    stroke(0);
-    fill(0x999999);
+    stroke(1);
+    strokeWeight(1);
+    fill(0xff009900);
     // box for largest version
-    boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, 0.01, CLASS_BASE_RATIO);
+    boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, 0.02, CLASS_BASE_RATIO);
     
     if (!HIDE_NON_SELECTED || this.isSelected()) {
       double churn = getCurrentTweenInt("churn") - firstChurn;
