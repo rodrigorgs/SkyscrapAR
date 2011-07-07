@@ -3,6 +3,9 @@ TODO list
 =========
 - BUG: Sometimes we select the board and it selects a class (Label)
 - BUG: When marker disappears, the model zooms out
+- Button to zoom in (change treemap size)
+- Show commit status together with version number
+- Show class metrics (loc, churn)
 
 DONE
 ====

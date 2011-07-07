@@ -8,6 +8,7 @@ class ClassItem extends SimpleMapItem {
   int[] churns;
   int[] locs;
   int[] changeds;
+  int firstChurn = 0;
   
   PackageItem parent;
   int level;
@@ -59,6 +60,10 @@ class ClassItem extends SimpleMapItem {
       lastNum = num;
       lastLoc = locs[num];
       lastChurn = churns[num];
+    
+      if (firstChurn == 0) {
+        firstChurn = lastChurn;
+      }
       
       if (lastLoc > maxloc)
         maxloc = lastLoc;
@@ -154,7 +159,7 @@ class ClassItem extends SimpleMapItem {
     boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, 0.01, CLASS_BASE_RATIO);
     
     if (!HIDE_NON_SELECTED || this.isSelected()) {
-      double churn = getCurrentTweenInt("churn") - getIntBetweenVersions("churn", g_firstVersion);
+      double churn = getCurrentTweenInt("churn") - firstChurn;
       double boxHeight = CLASS_MIN_HEIGHT + (churn / g_maxChurn) * CLASS_MAX_HEIGHT; 
       double currentLoc = getCurrentTweenInt("curr_loc");
       double currentFactor = currentLoc / getMaxLoc();
@@ -162,7 +167,7 @@ class ClassItem extends SimpleMapItem {
         return;
       }
       
-      strokeWeight(hasChanged() ? 4 : 1);
+      strokeWeight(hasChanged() ? 2.5 : 1);
       
       picker.start(this.index);
       fill(this.currentColor);
