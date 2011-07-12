@@ -2,6 +2,7 @@
 TODO list
 =========
 - Show commit message together with version number
+- Use offset to draw text in dark and light colors.
 
 DONE
 ====
@@ -83,6 +84,7 @@ int g_firstVersion = 1;
 double g_tweeningVersion = g_currentVersion;
 double g_maxChurn = 0;
 int maxVersion = -1;
+CommitLog commitLog;
 
 // misc
 TTS tts;
@@ -103,8 +105,13 @@ void loadTreemap() {
   //MapLayout algorithm = new SquarifiedLayout();
 
   XMLElement elem = new XMLElement(this, "test.xml");
-  mapModel = new PackageItem(null, elem, 0);
+  XMLElement elemCode = elem.getChild("CodeInfo");
+  XMLElement elemLog = elem.getChild("LogInfo");
+  
+  mapModel = new PackageItem(null, elemCode, 0);
   maxVersion = elem.getInt("lastVersion");
+  
+  commitLog = new CommitLog(elemLog);
 
   map = new Treemap(mapModel, 0, 0, width, height);
   map.setLayout(algorithm);
@@ -241,7 +248,7 @@ void drawOnLastMarker() {
 void drawText() {
   fill(0, 0, 0);
   text(titleString, 10, 32);
-  text("" + g_currentVersion, 10, height - 5);
+  text("" + g_currentVersion + ": " + commitLog.getMessage(), 10, height - 5);
 
 }
 
