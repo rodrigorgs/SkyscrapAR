@@ -3,8 +3,6 @@ TODO list
 =========
 - Show commit message together with version number
 
-- modelo esconde o texto (principalmente com zoom)
-
 DONE
 ====
 - Use churn as height
@@ -133,6 +131,7 @@ void setup() {
   tts = new TTS();
   
   textFont(font);
+  textMode(SCREEN);
 }
 
 // Rodrigo, 2011-06-06
