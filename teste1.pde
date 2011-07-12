@@ -1,8 +1,6 @@
 /*
 TODO list
 =========
-- cores configuraveis
-
 - busca textual
 - regua mostra versoes em que classes highlighted foram modificadas
 - ver se nexttext possui texto com outline, que é melhor que texto com shadow que estou usando
@@ -28,7 +26,7 @@ int THRESHOLD = 85; //45; //85; //110;
 double CONFIDENCE_THRESHOLD = 0.51; // default: 0.51
 boolean DEBUG = false;
 
-boolean USE_CAM = false;
+boolean USE_CAM = true;
 boolean DRAW_MODELS = true;
 boolean FLIPPED_CAM = false;
 
@@ -42,6 +40,9 @@ color CLASS_FLOOR_COLOR = #009900;
 color CLASS_CHANGED_COLOR = #990000;
 color CLASS_DEFAULT_COLOR = #CCCCCC;
 color CLASS_HIGHLIGHT_COLOR = #FFFF99;
+color FLOOR_COLOR = #000000;
+color TEXT_FG_COLOR = #000000;
+color TEXT_BG_COLOR = #FFFFFF;
 
 double PACKAGE_HEIGHT = 2.0;
 
@@ -176,7 +177,7 @@ void drawXmlTreemap3D() {
   
   pushMatrix();
   translate(0, 0, -12.0f);
-  fill(0);
+  fill(FLOOR_COLOR);
   box((float)TREEMAP_WIDTH, (float)TREEMAP_HEIGHT, 12.0f);
   popMatrix();
   
@@ -260,8 +261,8 @@ void shadowedText(String str, float x, float y, color fg, color bg) {
 }
 
 void drawText() {
-  color fg = #000000;
-  color bg = #FFFFFF;
+  color fg = TEXT_FG_COLOR;
+  color bg = TEXT_BG_COLOR;
   
   shadowedText(titleString, 10, 32, fg, bg);
   shadowedText("" + g_currentVersion + ": " + commitLog.getMessage(), 10, height - 5, fg, bg);

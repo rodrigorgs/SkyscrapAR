@@ -87,8 +87,6 @@ class PackageItem extends ClassItem implements MapModel {
     fill(red(PACKAGE_MIN_COLOR) * (1 - fracLevel) + red(PACKAGE_MAX_COLOR) * fracLevel,
     green(PACKAGE_MIN_COLOR) * (1 - fracLevel) + green(PACKAGE_MAX_COLOR) * fracLevel,
     blue(PACKAGE_MIN_COLOR) * (1 - fracLevel) + blue(PACKAGE_MAX_COLOR) * fracLevel);
-//    fill(255*level / (float)maxPackageLevel, 0, 0);
-//    println("Level " + level + " of " + maxPackageLevel);
     boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, PACKAGE_HEIGHT, PACKAGE_BASE_RATIO);
   
     for (int i = 0; i < items.length; i++) {
