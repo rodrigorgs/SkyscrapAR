@@ -1,14 +1,11 @@
 /*
 TODO list
 =========
-- BUG: Sometimes we select the board and it selects a class (Label)
-- BUG: When marker disappears, the model zooms out
-- Button to zoom in (change treemap size)
-- Show commit status together with version number
-- Show package name on mouse over
+- Show commit message together with version number
 
 - pacotes mais internos são mais claros
 
+- modelo esconde o texto (principalmente com zoom)
 
 DONE
 ====
@@ -315,7 +312,9 @@ void mouseMoved() {
   int id = picker.get(x, y);
   if (id > -1 && id < g_treemapItems.size()) {
     ClassItem item = g_treemapItems.get(id);
-    titleString = item.fullName + "\nLOC:" + item.getIntForCurrentVersion("curr_loc") + " Δchurn: " + (item.getIntForCurrentVersion("churn") - item.firstChurn);
+    titleString = item.fullName;
+    if (!(item instanceof PackageItem))
+      titleString += "\nLOC:" + item.getIntForCurrentVersion("curr_loc") + " Δchurn: " + (item.getIntForCurrentVersion("churn") - item.firstChurn);
   }
   else {
     titleString = "";

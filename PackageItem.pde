@@ -66,10 +66,14 @@ class PackageItem extends ClassItem implements MapModel {
     }
   }
   
+  int getIntForVersion(String attr, int version) {
+    return 0;
+  }
+  
   void draw() {
     checkLayout();
     
-    picker.start(32767);
+    picker.start(this.index);
     // TODO: draw the package (a quarter)
     Rect bounds = this.getBounds();
     fill(1.0 - level * 0.2, 0.0, 0.0, 1.0);
