@@ -248,11 +248,19 @@ void drawOnLastMarker() {
     popMatrix();
 }
 
-void drawText() {
-  fill(0, 0, 0);
-  text(titleString, 10, 32);
-  text("" + g_currentVersion + ": " + commitLog.getMessage(), 10, height - 5);
+void shadowedText(String str, float x, float y, color fg, color bg) {
+  fill(bg);
+  text(str, x+2, y+2);
+  fill(fg);
+  text(str, x, y);
+}
 
+void drawText() {
+  color fg = #000000;
+  color bg = #FFFFFF;
+  
+  shadowedText(titleString, 10, 32, fg, bg);
+  shadowedText("" + g_currentVersion + ": " + commitLog.getMessage(), 10, height - 5, fg, bg);
 }
 
 void draw()
