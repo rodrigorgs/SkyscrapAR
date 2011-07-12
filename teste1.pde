@@ -1,6 +1,9 @@
 /*
 TODO list
 =========
+- no XML, atributo lastVersion pode estar errado
+- no tweening, algumas classes vem de baixo.
+
 - busca textual
 - regua mostra versoes em que classes highlighted foram modificadas
 - ver se nexttext possui texto com outline, que é melhor que texto com shadow que estou usando
@@ -47,7 +50,7 @@ color TEXT_BG_COLOR = #FFFFFF;
 double PACKAGE_HEIGHT = 2.0;
 
 double PACKAGE_BASE_RATIO = 0.90;
-double CLASS_BASE_RATIO = 0.85;
+double CLASS_BASE_RATIO = 0.70;
 
 double CLASS_MIN_HEIGHT = 10.0;
 double CLASS_MAX_HEIGHT = (TREEMAP_WIDTH + TREEMAP_HEIGHT) * 0.6;
@@ -176,7 +179,7 @@ void drawXmlTreemap3D() {
   noStroke();
   
   pushMatrix();
-  translate(0, 0, -12.0f);
+  translate(0, 0, -6.0f);
   fill(FLOOR_COLOR);
   box((float)TREEMAP_WIDTH, (float)TREEMAP_HEIGHT, 12.0f);
   popMatrix();
@@ -266,7 +269,7 @@ void shadowedText(String str, float x, float y) {
 
 void drawText() {
   shadowedText(titleString, 10, 32);
-  shadowedText(commitLog.getAuthor() + "\nv" + g_currentVersion + ": " + commitLog.getMessage(), 10, height - 30);
+  shadowedText(commitLog.getAuthor() + "\nv" + g_firstVersion + "-v" + g_currentVersion + ": " + commitLog.getMessage(), 10, height - 30);
 }
 
 void draw()
