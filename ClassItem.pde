@@ -15,9 +15,6 @@ class ClassItem extends SimpleMapItem {
   int level;
   XMLElement xmlElement;
   
-  color DEFAULT_COLOR = 0xffCCCCCC; // first two digits is alpha
-  color HIGHLIGHT_COLOR = 0xffFFFF99;
-
   ClassItem() {
   }
 
@@ -80,18 +77,18 @@ class ClassItem extends SimpleMapItem {
     
     setSize(maxloc);
     
-    this.currentColor = DEFAULT_COLOR;
+    this.currentColor = CLASS_DEFAULT_COLOR;
   }
 
   boolean isSelected() {
-    return this.currentColor == HIGHLIGHT_COLOR;
+    return this.currentColor == CLASS_HIGHLIGHT_COLOR;
   }
 
   void toggleSelect() {
-    if (this.currentColor == DEFAULT_COLOR)
-      this.currentColor = HIGHLIGHT_COLOR;
+    if (this.currentColor == CLASS_DEFAULT_COLOR)
+      this.currentColor = CLASS_HIGHLIGHT_COLOR;
     else
-      this.currentColor = DEFAULT_COLOR;
+      this.currentColor = CLASS_DEFAULT_COLOR;
   }
 
   void boxWithBounds(double x, double y, double z, double w, double h, double zz, double baseRatio) {
@@ -170,7 +167,7 @@ class ClassItem extends SimpleMapItem {
     
     stroke(1);
     strokeWeight(1);
-    fill(0xff009900);
+    fill(CLASS_FLOOR_COLOR);
     // box for largest version
     boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, 0.02, CLASS_BASE_RATIO);
     
@@ -186,7 +183,7 @@ class ClassItem extends SimpleMapItem {
       strokeWeight(hasChanged() ? 2.5 : 1);
       
       picker.start(this.index);
-      fill(hasChanged() ? 0xff990000 : this.currentColor);
+      fill(hasChanged() ? CLASS_CHANGED_COLOR : this.currentColor);
       // box for selected version
       boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, boxHeight, CLASS_BASE_RATIO * currentFactor);
     }

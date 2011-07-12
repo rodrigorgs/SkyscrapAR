@@ -1,11 +1,11 @@
 /*
 TODO list
 =========
-- Show commit message together with version number
-- Use offset to draw text in dark and light colors.
+- cores configuraveis
 
 - busca textual
-- 
+- regua mostra versoes em que classes highlighted foram modificadas
+- ver se nexttext possui texto com outline, que é melhor que texto com shadow que estou usando
 
 DONE
 ====
@@ -36,8 +36,12 @@ int TREEMAP_WIDTH = 150;
 int TREEMAP_HEIGHT = 150;
 boolean HIDE_NON_SELECTED = false;
 
-color floorPackageColor = color(0,0,0);
-color ceilPackageColor = color(255, 255, 255);
+color PACKAGE_MIN_COLOR = #000000;
+color PACKAGE_MAX_COLOR = #FFFFFF;
+color CLASS_FLOOR_COLOR = #009900;
+color CLASS_CHANGED_COLOR = #990000;
+color CLASS_DEFAULT_COLOR = #CCCCCC;
+color CLASS_HIGHLIGHT_COLOR = #FFFF99;
 
 double PACKAGE_HEIGHT = 2.0;
 
