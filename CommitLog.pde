@@ -5,7 +5,7 @@ class CommitLog {
     this.elem = elem;
   }
   
-  String getMessageForVersion(int version) {
+  XMLElement getVersion(int version) {
     XMLElement[] children = this.elem.getChildren();
     if (version > children.length)
       version = children.length;
@@ -13,11 +13,19 @@ class CommitLog {
       version = 1;
       
     int index = version - 1;
-    
-    return children[index].getString("msg");
+
+    return children[index];
+  }
+  
+  String getMessageForVersion(int version) {
+    return getVersion(version).getString("msg");
   }
   
   String getMessage() {
     return getMessageForVersion(g_currentVersion);
+  }
+  
+  String getAuthor() {
+    return getVersion(g_currentVersion).getString("author");
   }
 }

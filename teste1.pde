@@ -260,12 +260,13 @@ void shadowedText(String str, float x, float y, color fg, color bg) {
   text(str, x, y);
 }
 
+void shadowedText(String str, float x, float y) {
+  shadowedText(str, x, y, TEXT_FG_COLOR, TEXT_BG_COLOR);
+}
+
 void drawText() {
-  color fg = TEXT_FG_COLOR;
-  color bg = TEXT_BG_COLOR;
-  
-  shadowedText(titleString, 10, 32, fg, bg);
-  shadowedText("" + g_currentVersion + ": " + commitLog.getMessage(), 10, height - 5, fg, bg);
+  shadowedText(titleString, 10, 32);
+  shadowedText(commitLog.getAuthor() + "\nv" + g_currentVersion + ": " + commitLog.getMessage(), 10, height - 30);
 }
 
 void draw()
