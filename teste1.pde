@@ -330,7 +330,7 @@ void mouseClicked() {
   int id = picker.get(x, y);
   if (id > -1 && id < g_treemapItems.size()) {
     ClassItem item = g_treemapItems.get(id);
-//    if (!item.type.equals("package")) {
+    if (!(item instanceof PackageItem)) {
       item.toggleSelect();
       println("" + id + ": " + item.name + " level=" + item.level);
       if (item.isSelected())
