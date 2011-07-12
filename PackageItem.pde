@@ -1,3 +1,6 @@
+
+int maxPackageLevel = -1;
+
 class PackageItem extends ClassItem implements MapModel {    
   MapLayout algorithm = new PivotBySplitSize();
   Mappable[] items;
@@ -16,6 +19,8 @@ class PackageItem extends ClassItem implements MapModel {
     else
       this.fullName = parent.fullName + "." + this.name;
 
+    if (level > maxPackageLevel)
+      maxPackageLevel = level;
     
     g_treemapItems.add(this);
 
@@ -76,10 +81,14 @@ class PackageItem extends ClassItem implements MapModel {
     picker.start(this.index);
     // TODO: draw the package (a quarter)
     Rect bounds = this.getBounds();
-    fill(1.0 - level * 0.2, 0.0, 0.0, 1.0);
     strokeWeight(1);
     stroke(0);
-//    fill(0xFFff0000);
+    float fracLevel = level / (float)maxPackageLevel;
+    fill(red(floorPackageColor) * (1 - fracLevel) + red(ceilPackageColor) * fracLevel,
+    green(floorPackageColor) * (1 - fracLevel) + green(ceilPackageColor) * fracLevel,
+    blue(floorPackageColor) * (1 - fracLevel) + blue(ceilPackageColor) * fracLevel);
+//    fill(255*level / (float)maxPackageLevel, 0, 0);
+//    println("Level " + level + " of " + maxPackageLevel);
     boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, PACKAGE_HEIGHT, PACKAGE_BASE_RATIO);
   
     for (int i = 0; i < items.length; i++) {

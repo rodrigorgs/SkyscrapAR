@@ -3,8 +3,6 @@ TODO list
 =========
 - Show commit message together with version number
 
-- pacotes mais internos são mais claros
-
 - modelo esconde o texto (principalmente com zoom)
 
 DONE
@@ -35,6 +33,9 @@ boolean FLIPPED_CAM = false;
 int TREEMAP_WIDTH = 150;
 int TREEMAP_HEIGHT = 150;
 boolean HIDE_NON_SELECTED = false;
+
+color floorPackageColor = color(0,0,0);
+color ceilPackageColor = color(255, 255, 255);
 
 double PACKAGE_HEIGHT = 2.0;
 
@@ -162,7 +163,7 @@ void drawXmlTreemap3D() {
   
   pushMatrix();
   translate(0, 0, -12.0f);
-  fill(128);
+  fill(0);
   box((float)TREEMAP_WIDTH, (float)TREEMAP_HEIGHT, 12.0f);
   popMatrix();
   
@@ -335,7 +336,7 @@ void mouseClicked() {
       println("" + id + ": " + item.name + " level=" + item.level);
       if (item.isSelected())
         speak(item.name);
-//    }
+    }
   }  
 }
 
