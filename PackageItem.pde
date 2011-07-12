@@ -8,7 +8,7 @@ class PackageItem extends ClassItem implements MapModel {
     
   public PackageItem(PackageItem parent, XMLElement folder, int level) {
 //    super(parent, folder, level);      
-    this.type = "package";
+    this.type = "Package";
     this.parent = parent;
     this.level = level;
     this.index = g_treemapItems.size();

@@ -22,7 +22,7 @@ class ClassItem extends SimpleMapItem {
   }
 
   ClassItem(PackageItem parent, XMLElement elem, int level) {
-    this.type = "class";
+    this.type = elem.getString("type");
     this.parent = parent;
     this.xmlElement = elem;
     this.level = level;

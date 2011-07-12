@@ -4,6 +4,9 @@ TODO list
 - Show commit message together with version number
 - Use offset to draw text in dark and light colors.
 
+- busca textual
+- 
+
 DONE
 ====
 - Use churn as height
@@ -69,7 +72,7 @@ PMatrix3D lastMatrix = new PMatrix3D(0.03271547,-0.9987524,0.037727464,7.3349524
 // NyAR4Psg
 Capture cam;
 MultiMarker nya;
-PFont font=createFont("FFScala", 20);
+PFont font=createFont("FFScala", 16);
 NyAR4PsgConfig nyarConf = NyAR4PsgConfig.CONFIG_PSG;
 //NyAR4PsgConfig nyarConf = new NyAR4PsgConfig(NyAR4PsgConfig.CS_RIGHT_HAND, NyAR4PsgConfig.TM_NYARTK);
 PImage myframe;
@@ -319,7 +322,7 @@ void mouseMoved() {
   int id = picker.get(x, y);
   if (id > -1 && id < g_treemapItems.size()) {
     ClassItem item = g_treemapItems.get(id);
-    titleString = item.fullName;
+    titleString = "[" + item.type + "] " + item.fullName;
     if (!(item instanceof PackageItem))
       titleString += "\nLOC:" + item.getIntForCurrentVersion("curr_loc") + " Δchurn: " + (item.getIntForCurrentVersion("churn") - item.firstChurn);
   }
