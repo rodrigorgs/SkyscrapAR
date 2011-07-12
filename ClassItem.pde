@@ -146,6 +146,10 @@ class ClassItem extends SimpleMapItem {
 //    return getVersion(version).getInt(attr);
   }
   
+  int getIntForCurrentVersion(String attr) {
+    return getIntForVersion(attr, g_currentVersion);
+  }
+  
   double getIntBetweenVersions(String attr, double version) {
     int version1 = floor((float)version);
     int version2 = ceil((float)version);

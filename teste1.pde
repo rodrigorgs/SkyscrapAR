@@ -5,11 +5,8 @@ TODO list
 - BUG: When marker disappears, the model zooms out
 - Button to zoom in (change treemap size)
 - Show commit status together with version number
-- Show class metrics (loc, churn)
 - Show package name on mouse over
-- Show package name together with classname
 
-- mostrar metricas
 - pacotes mais internos são mais claros
 
 
@@ -70,14 +67,12 @@ import picking.*;
 /////////// Global Variables ///////////////////////////
 ////////////////////////////////////////////////////////
 
-//PFont font;
-
 PMatrix3D lastMatrix = new PMatrix3D(0.03271547,-0.9987524,0.037727464,7.3349524,0.9948697,0.028926386,-0.09694087,6.203373,0.0957286,0.040705375,0.99457484,-279.99384,0.0,0.0,0.0,1.0);
 
 // NyAR4Psg
 Capture cam;
 MultiMarker nya;
-PFont font=createFont("FFScala", 32);
+PFont font=createFont("FFScala", 20);
 NyAR4PsgConfig nyarConf = NyAR4PsgConfig.CONFIG_PSG;
 //NyAR4PsgConfig nyarConf = new NyAR4PsgConfig(NyAR4PsgConfig.CS_RIGHT_HAND, NyAR4PsgConfig.TM_NYARTK);
 PImage myframe;
@@ -320,7 +315,7 @@ void mouseMoved() {
   int id = picker.get(x, y);
   if (id > -1 && id < g_treemapItems.size()) {
     ClassItem item = g_treemapItems.get(id);
-    titleString = item.fullName;
+    titleString = item.fullName + "\nLOC:" + item.getIntForCurrentVersion("curr_loc") + " Δchurn: " + (item.getIntForCurrentVersion("churn") - item.firstChurn);
   }
   else {
     titleString = "";
