@@ -14,7 +14,7 @@ class PackageItem extends ClassItem implements MapModel {
     this.index = g_treemapItems.size();
     this.name = folder.getString("name");    
     
-    if (parent == null)
+    if (parent == null || parent.name == null)
       this.fullName = this.name;
     else
       this.fullName = parent.fullName + "." + this.name;

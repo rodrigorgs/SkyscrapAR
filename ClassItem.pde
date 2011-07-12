@@ -29,7 +29,7 @@ class ClassItem extends SimpleMapItem {
     this.index = g_treemapItems.size();
     this.name = elem.getString("name");
     
-    if (parent == null)
+    if (parent == null || parent.name == null)
       this.fullName = this.name;
     else
       this.fullName = parent.fullName + "." + this.name;
