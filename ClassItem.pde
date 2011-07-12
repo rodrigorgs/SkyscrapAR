@@ -4,6 +4,7 @@ class ClassItem extends SimpleMapItem {
   int index = -1;
   String type;
   String name;
+  String fullName;
   
   int[] churns;
   int[] locs;
@@ -27,6 +28,11 @@ class ClassItem extends SimpleMapItem {
     this.level = level;
     this.index = g_treemapItems.size();
     this.name = elem.getString("name");
+    
+    if (parent == null)
+      this.fullName = this.name;
+    else
+      this.fullName = parent.fullName + "." + this.name;
     
     g_treemapItems.add(this);
     

@@ -9,6 +9,10 @@ TODO list
 - Show package name on mouse over
 - Show package name together with classname
 
+- mostrar metricas
+- pacotes mais internos são mais claros
+
+
 DONE
 ====
 - Use churn as height
@@ -316,7 +320,7 @@ void mouseMoved() {
   int id = picker.get(x, y);
   if (id > -1 && id < g_treemapItems.size()) {
     ClassItem item = g_treemapItems.get(id);
-    titleString = item.name;
+    titleString = item.fullName;
   }
   else {
     titleString = "";
