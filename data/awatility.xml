@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project name="Awaitility" lastVersion="16">
+  <CodeInfo>
+    <package name="com">
+      <package name="jayway">
+        <package name="awaitility">
+          <class name="WaitForAtomicBooleanTest" type="ConcreteClass" maxLoc="43">
+            <version num="1" curr_loc="41" changed="1" churn="41" />
+            <version num="2" curr_loc="43" changed="1" churn="43" />
+          </class>
+          <package name="core">
+            <class name="CallableHamcrestCondition" type="ConcreteClass" maxLoc="80">
+              <version num="3" curr_loc="80" changed="1" churn="80" />
+              <version num="4" curr_loc="38" changed="1" churn="122" />
+              <version num="16" curr_loc="38" changed="1" churn="122" />
+            </class>
+            <class name="FieldSupplierBuilder" type="ConcreteClass" maxLoc="236">
+              <version num="3" curr_loc="236" changed="1" churn="236" />
+              <version num="7" curr_loc="223" changed="1" churn="249" />
+              <version num="8" curr_loc="196" changed="1" churn="276" />
+              <version num="10" curr_loc="196" changed="1" churn="276" />
+              <version num="13" curr_loc="108" changed="1" churn="364" />
+              <version num="14" curr_loc="108" changed="1" churn="364" />
+              <version num="16" curr_loc="108" changed="1" churn="364" />
+            </class>
+            <class name="AbstractHamcrestCondition" type="AbstractClass" maxLoc="54">
+              <version num="4" curr_loc="54" changed="1" churn="54" />
+              <version num="16" curr_loc="54" changed="1" churn="54" />
+            </class>
+            <class name="CallableCondition" type="ConcreteClass" maxLoc="56">
+              <version num="4" curr_loc="56" changed="1" churn="56" />
+              <version num="5" curr_loc="56" changed="1" churn="56" />
+              <version num="16" curr_loc="51" changed="1" churn="61" />
+            </class>
+            <class name="ConditionAwaiter" type="AbstractClass" maxLoc="109">
+              <version num="4" curr_loc="104" changed="1" churn="104" />
+              <version num="16" curr_loc="109" changed="1" churn="109" />
+            </class>
+            <class name="ConditionFactory" type="ConcreteClass" maxLoc="494">
+              <version num="4" curr_loc="494" changed="1" churn="494" />
+              <version num="10" curr_loc="485" changed="1" churn="503" />
+              <version num="12" curr_loc="470" changed="1" churn="518" />
+              <version num="15" curr_loc="470" changed="1" churn="518" />
+              <version num="16" curr_loc="493" changed="1" churn="541" />
+            </class>
+            <class name="ConditionSettings" type="ConcreteClass" maxLoc="70">
+              <version num="4" curr_loc="70" changed="1" churn="70" />
+              <version num="10" curr_loc="70" changed="1" churn="70" />
+              <version num="16" curr_loc="55" changed="1" churn="85" />
+            </class>
+            <class name="HamcrestToStringFilter" type="ConcreteClass" maxLoc="48">
+              <version num="4" curr_loc="48" changed="1" churn="48" />
+              <version num="16" curr_loc="48" changed="1" churn="48" />
+            </class>
+            <class name="MethodCallRecorder" type="ConcreteClass" maxLoc="78">
+              <version num="4" curr_loc="78" changed="1" churn="78" />
+              <version num="16" curr_loc="78" changed="1" churn="78" />
+            </class>
+            <class name="ProxyHamcrestCondition" type="ConcreteClass" maxLoc="35">
+              <version num="4" curr_loc="34" changed="1" churn="34" />
+              <version num="16" curr_loc="35" changed="1" churn="35" />
+            </class>
+            <class name="HamcrestToStringFilterTest" type="ConcreteClass" maxLoc="46">
+              <version num="4" curr_loc="44" changed="1" churn="44" />
+              <version num="16" curr_loc="46" changed="1" churn="46" />
+            </class>
+            <class name="MethodCallRecorderTest" type="ConcreteClass" maxLoc="56">
+              <version num="4" curr_loc="55" changed="1" churn="55" />
+              <version num="12" curr_loc="56" changed="1" churn="56" />
+              <version num="16" curr_loc="56" changed="1" churn="56" />
+            </class>
+            <class name="Condition" type="Interface" maxLoc="21">
+              <version num="16" curr_loc="21" changed="1" churn="21" />
+            </class>
+          </package>
+          <class name="UsingFieldSupplierTest" type="ConcreteClass" maxLoc="230">
+            <version num="3" curr_loc="223" changed="1" churn="223" />
+            <version num="7" curr_loc="180" changed="1" churn="266" />
+            <version num="10" curr_loc="230" changed="1" churn="316" />
+            <version num="12" curr_loc="222" changed="1" churn="324" />
+            <version num="13" curr_loc="222" changed="1" churn="324" />
+            <version num="16" curr_loc="222" changed="1" churn="324" />
+          </class>
+          <class name="Awaitility" type="ConcreteClass" maxLoc="394">
+            <version num="4" curr_loc="394" changed="1" churn="394" />
+            <version num="6" curr_loc="394" changed="1" churn="394" />
+            <version num="10" curr_loc="394" changed="1" churn="394" />
+            <version num="11" curr_loc="356" changed="1" churn="432" />
+            <version num="12" curr_loc="352" changed="1" churn="436" />
+            <version num="16" curr_loc="352" changed="1" churn="436" />
+          </class>
+          <class name="Duration" type="ConcreteClass" maxLoc="81">
+            <version num="4" curr_loc="81" changed="1" churn="81" />
+            <version num="16" curr_loc="69" changed="1" churn="93" />
+          </class>
+          <package name="proxy">
+            <class name="ProxyCreator" type="ConcreteClass" maxLoc="99">
+              <version num="4" curr_loc="98" changed="1" churn="98" />
+              <version num="16" curr_loc="99" changed="1" churn="99" />
+            </class>
+            <class name="ProxyCreatorTest" type="ConcreteClass" maxLoc="53">
+              <version num="4" curr_loc="52" changed="1" churn="52" />
+              <version num="16" curr_loc="53" changed="1" churn="53" />
+            </class>
+            <class name="CannotCreateProxyException" type="ConcreteClass" maxLoc="35">
+              <version num="16" curr_loc="35" changed="1" churn="35" />
+            </class>
+            <class name="TypeUtils" type="ConcreteClass" maxLoc="64">
+              <version num="16" curr_loc="64" changed="1" churn="64" />
+            </class>
+          </package>
+          <package name="reflect">
+            <class name="FieldAnnotationMatcherStrategy" type="ConcreteClass" maxLoc="52">
+              <version num="4" curr_loc="52" changed="1" churn="52" />
+              <version num="16" curr_loc="52" changed="1" churn="52" />
+            </class>
+            <class name="FieldMatcherStrategy" type="AbstractClass" maxLoc="49">
+              <version num="4" curr_loc="49" changed="1" churn="49" />
+              <version num="16" curr_loc="49" changed="1" churn="49" />
+            </class>
+            <class name="FieldNameAndTypeMatcherStrategy" type="ConcreteClass" maxLoc="52">
+              <version num="4" curr_loc="52" changed="1" churn="52" />
+              <version num="16" curr_loc="52" changed="1" churn="52" />
+            </class>
+            <class name="FieldNameMatcherStrategy" type="ConcreteClass" maxLoc="48">
+              <version num="4" curr_loc="48" changed="1" churn="48" />
+              <version num="16" curr_loc="48" changed="1" churn="48" />
+            </class>
+            <class name="FieldTypeMatcherStrategy" type="ConcreteClass" maxLoc="49">
+              <version num="4" curr_loc="49" changed="1" churn="49" />
+              <version num="16" curr_loc="49" changed="1" churn="49" />
+            </class>
+            <class name="WhiteboxImpl" type="ConcreteClass" maxLoc="247">
+              <version num="4" curr_loc="247" changed="1" churn="247" />
+              <version num="10" curr_loc="247" changed="1" churn="247" />
+              <version num="12" curr_loc="247" changed="1" churn="247" />
+              <version num="16" curr_loc="247" changed="1" churn="247" />
+            </class>
+            <class name="AssignableToFieldTypeMatcherStrategy" type="ConcreteClass" maxLoc="30">
+              <version num="16" curr_loc="30" changed="1" churn="30" />
+            </class>
+            <package name="exception">
+              <class name="FieldNotFoundException" type="ConcreteClass" maxLoc="38">
+                <version num="16" curr_loc="38" changed="1" churn="38" />
+              </class>
+              <class name="TooManyFieldsFoundException" type="ConcreteClass" maxLoc="38">
+                <version num="16" curr_loc="38" changed="1" churn="38" />
+              </class>
+            </package>
+          </package>
+          <class name="AwaitilityTest" type="ConcreteClass" maxLoc="381">
+            <version num="4" curr_loc="381" changed="1" churn="381" />
+            <version num="9" curr_loc="367" changed="1" churn="395" />
+            <version num="12" curr_loc="368" changed="1" churn="396" />
+            <version num="16" curr_loc="367" changed="1" churn="397" />
+          </class>
+          <package name="spi">
+            <class name="Timeout" type="ConcreteClass" maxLoc="29">
+              <version num="5" curr_loc="29" changed="1" churn="29" />
+            </class>
+          </package>
+          <class name="DemoTest" type="ConcreteClass" maxLoc="101">
+            <version num="9" curr_loc="100" changed="1" churn="100" />
+            <version num="12" curr_loc="101" changed="1" churn="101" />
+            <version num="16" curr_loc="100" changed="1" churn="102" />
+          </class>
+          <package name="classes">
+            <class name="Asynch" type="ConcreteClass" maxLoc="38">
+              <version num="16" curr_loc="38" changed="1" churn="38" />
+            </class>
+            <class name="ClassWithMethods" type="ConcreteClass" maxLoc="23">
+              <version num="16" curr_loc="23" changed="1" churn="23" />
+            </class>
+            <class name="ExampleAnnotation" type="Interface" maxLoc="11">
+              <version num="16" curr_loc="11" changed="1" churn="11" />
+            </class>
+            <class name="ExampleAnnotation2" type="Interface" maxLoc="11">
+              <version num="16" curr_loc="11" changed="1" churn="11" />
+            </class>
+            <class name="ExceptionThrowingAsynch" type="ConcreteClass" maxLoc="34">
+              <version num="16" curr_loc="34" changed="1" churn="34" />
+            </class>
+            <class name="ExceptionThrowingFakeRepository" type="ConcreteClass" maxLoc="26">
+              <version num="16" curr_loc="26" changed="1" churn="26" />
+            </class>
+            <class name="FakeObjectRepository" type="ConcreteClass" maxLoc="25">
+              <version num="16" curr_loc="25" changed="1" churn="25" />
+            </class>
+            <class name="FakeRepository" type="Interface" maxLoc="24">
+              <version num="16" curr_loc="24" changed="1" churn="24" />
+            </class>
+            <class name="FakeRepositoryEqualsOne" type="ConcreteClass" maxLoc="32">
+              <version num="16" curr_loc="32" changed="1" churn="32" />
+            </class>
+            <class name="FakeRepositoryImpl" type="ConcreteClass" maxLoc="39">
+              <version num="16" curr_loc="39" changed="1" churn="39" />
+            </class>
+            <class name="FakeRepositoryValue" type="ConcreteClass" maxLoc="30">
+              <version num="16" curr_loc="30" changed="1" churn="30" />
+            </class>
+            <class name="FakeRepositoryWithAnnotation" type="ConcreteClass" maxLoc="30">
+              <version num="16" curr_loc="30" changed="1" churn="30" />
+            </class>
+            <class name="FakeRepositoryWithStaticFieldAndAnnotation" type="ConcreteClass" maxLoc="30">
+              <version num="16" curr_loc="30" changed="1" churn="30" />
+            </class>
+            <class name="FinalClass" type="ConcreteClass" maxLoc="19">
+              <version num="16" curr_loc="19" changed="1" churn="19" />
+            </class>
+            <class name="FinalFakeRepositoryImpl" type="ConcreteClass" maxLoc="19">
+              <version num="16" curr_loc="19" changed="1" churn="19" />
+            </class>
+          </package>
+        </package>
+      </package>
+    </package>
+  </CodeInfo>
+  <LogInfo>
+    <versionLog num="1" sha="bad7d329c8dcb78f69e8679ea4a1be3cd5fee5b1" author="Johan Haleby &lt;johan.haleby@gmail.com&gt;" date="Tue Apr 12 09:14:54 2011 +0200" msg="    Organized imports" />
+    <versionLog num="2" sha="3d7b41fe705f287f7d4c76107eac32296754de58" author="Johan Haleby &lt;johan.haleby@gmail.com&gt;" date="Tue Apr 12 08:26:52 2011 +0200" msg="    Added an example of how to wait for AtomicBoolean" />
+    <versionLog num="3" sha="5f6663b535172787daf6cf4eb5f50fcf106d23f2" author="Johan Haleby &lt;johan.haleby@gmail.com&gt;" date="Sun Apr 3 14:23:23 2011 +0200" msg="    Improved error messages when using field suppliers and a timeout occurs" />
+    <versionLog num="4" sha="c8a818d47ddf0319b64101ea1d7d159fecbfb35d" author="Johan Haleby &lt;johan.haleby@gmail.com&gt;" date="Sun Apr 3 13:13:47 2011 +0200" msg="    Awaitility now throws IllegalStateException when timeout is less than or equal to the poll interval or poll delay" />
+    <versionLog num="5" sha="28f968364734fe3eaaed087f9f65c3a539ae26b5" author="Johan Haleby &lt;johan.haleby@gmail.com&gt;" date="Sat Nov 6 10:34:03 2010 +0100" msg="    Improved error messages in extension DSL:s" />
+    <versionLog num="6" sha="12c9df5d04a26b8384a88e8dec4bad33ff8d90ab" author="Johan Haleby &lt;johan.haleby@gmail.com&gt;" date="Mon Oct 18 21:48:47 2010 +0200" msg="    Fixing javadoc error on fieldIn method" />
+    <versionLog num="7" sha="d32941341431b55cecff284ad6e155e6a54d4c4a" author="Johan Haleby &lt;johan.haleby@gmail.com&gt;" date="Sat Oct 16 08:54:09 2010 +0200" msg="    ofType is always first and then you can use a combination of anWithName and annotatedWith when building a FieldSupplier" />
+    <versionLog num="8" sha="75a9c18177c11f2f136bca7e51097b14b3258c24" author="Jan Kronquist &lt;jan.kronquist@gmail.com&gt;" date="Thu Oct 14 09:00:09 2010 +0200" msg="    Changed &lt;Type&gt; into &lt;T&gt;" />
+    <versionLog num="9" sha="d010c92434a125f8d62916f36e2d2b32759ecfc1" author="Johan Haleby &lt;johan.haleby@gmail.com&gt;" date="Wed Oct 13 18:59:17 2010 +0200" msg="    Removed unused imports" />
+    <versionLog num="10" sha="4d6d09e92b5d1d982a38fef414f172d207b586e2" author="Johan Haleby &lt;johan.haleby@gmail.com&gt;" date="Mon Oct 11 21:45:28 2010 +0200" msg="    Refactored in back to fieldIn and added javadco" />
+    <versionLog num="11" sha="65bb6cb141afa616b6315757e9b117f804987fa2" author="Jan Kronquist &lt;jan.kronquist@gmail.com&gt;" date="Mon Oct 11 13:30:15 2010 +0200" msg="    Updated javadoc" />
+    <versionLog num="12" sha="8acdcae271e2b459b1f3b57405265894c62aaa2e" author="Johan Haleby &lt;johan.haleby@gmail.com&gt;" date="Sat Oct 9 10:43:44 2010 +0200" msg="    Fixed a bug in teset and refactored to untilCall" />
+    <versionLog num="13" sha="bdd7c2f1580d622385dca7ec60ae8f94a8c4b288" author="Johan Haleby &lt;johan.haleby@gmail.com&gt;" date="Thu Oct 7 20:51:22 2010 +0200" msg="    Minor cleanup" />
+    <versionLog num="14" sha="ef4da0f4aa4eb5bb3f18eb92fbeb1f4c367ce1de" author="Johan Haleby &lt;johan.haleby@gmail.com&gt;" date="Thu Oct 7 19:36:44 2010 +0200" msg="    Minor cast fix" />
+    <versionLog num="15" sha="5993fd2519925c54e5ad5d2c39d915f2d2a02a99" author="Jan Kronquist &lt;jan.kronquist@gmail.com&gt;" date="Thu Oct 7 14:09:01 2010 +0200" msg="    Refactored to have separate module for Scala support" />
+  </LogInfo>
+</Project>
+

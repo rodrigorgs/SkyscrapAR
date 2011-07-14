@@ -10,6 +10,7 @@ class ClassItem extends SimpleMapItem {
   int[] locs;
   int[] changeds;
   int firstChurn = 0;
+  int firstClassVersion;
   
   PackageItem parent;
   int level;
@@ -66,6 +67,7 @@ class ClassItem extends SimpleMapItem {
     
       if (firstChurn == 0) {
         firstChurn = lastChurn;
+        firstClassVersion = num+1;
       }
       
       if (lastLoc > maxloc)
@@ -129,8 +131,12 @@ class ClassItem extends SimpleMapItem {
     
     if (attr.equals("curr_loc"))
       return locs[v];
-    else if (attr.equals("churn"))
-      return churns[v];
+    else if (attr.equals("churn")) {
+      if (version+1 < firstClassVersion)
+        return churns[firstClassVersion-1];
+      else
+        return churns[v];
+    }
     else if (attr.equals("changed")) {
       if (version > locs.length)
         return 0;
@@ -173,7 +179,12 @@ class ClassItem extends SimpleMapItem {
     
     if (!HIDE_NON_SELECTED || this.isSelected()) {
       double churn = getCurrentTweenInt("churn") - firstChurn;
-      double boxHeight = CLASS_MIN_HEIGHT + (churn / g_maxChurn) * CLASS_MAX_HEIGHT; 
+
+      double boxHeight = CLASS_MIN_HEIGHT + (churn / g_maxChurn) * CLASS_MAX_HEIGHT;
+      if (boxHeight < 0) {
+        boxHeight = 0;
+      }
+      
       double currentLoc = getCurrentTweenInt("curr_loc");
       double currentFactor = currentLoc / getMaxLoc();
       if (currentLoc == 0) {

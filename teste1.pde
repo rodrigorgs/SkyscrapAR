@@ -1,3 +1,6 @@
+String INPUT_FILENAME = "awatility.xml";
+//String INPUT_FILENAME = "prefuse.xml";
+//String INPUT_FILENAME = "junit.xml";
 /*
 TODO list
 =========
@@ -25,16 +28,17 @@ DONE
 /////////// Configuration Variables ////////////////////
 ////////////////////////////////////////////////////////
 
-int THRESHOLD = 85; //45; //85; //110;
+int THRESHOLD = 145; //45; //85; //110;
 double CONFIDENCE_THRESHOLD = 0.51; // default: 0.51
 boolean DEBUG = false;
 
+boolean PERSISTENT_TREEMAP = false;
 boolean USE_CAM = true;
 boolean DRAW_MODELS = true;
 boolean FLIPPED_CAM = false;
 
-int TREEMAP_WIDTH = 150;
-int TREEMAP_HEIGHT = 150;
+int TREEMAP_WIDTH = 100;
+int TREEMAP_HEIGHT = TREEMAP_WIDTH;
 boolean HIDE_NON_SELECTED = false;
 
 color PACKAGE_MIN_COLOR = #000000;
@@ -44,8 +48,8 @@ color CLASS_CHANGED_COLOR = #990000;
 color CLASS_DEFAULT_COLOR = #CCCCCC;
 color CLASS_HIGHLIGHT_COLOR = #FFFF99;
 color FLOOR_COLOR = #000000;
-color TEXT_FG_COLOR = #000000;
-color TEXT_BG_COLOR = #FFFFFF;
+color TEXT_BG_COLOR = #000000;
+color TEXT_FG_COLOR = #FFFFFF;
 
 double PACKAGE_HEIGHT = 2.0;
 
@@ -96,6 +100,8 @@ double g_tweeningVersion = g_currentVersion;
 double g_maxChurn = 0;
 int maxVersion = -1;
 CommitLog commitLog;
+String projectName;
+int previousVisitedVersion = g_firstVersion;
 
 // misc
 TTS tts;
@@ -115,9 +121,10 @@ void loadTreemap() {
   MapLayout algorithm = new PivotBySplitSize(); // default
   //MapLayout algorithm = new SquarifiedLayout();
 
-  XMLElement elem = new XMLElement(this, "test.xml");
+  XMLElement elem = new XMLElement(this, INPUT_FILENAME);
   XMLElement elemCode = elem.getChild("CodeInfo");
   XMLElement elemLog = elem.getChild("LogInfo");
+  projectName = elem.getString("name");
   
   mapModel = new PackageItem(null, elemCode, 0);
   maxVersion = elem.getInt("lastVersion");
@@ -136,7 +143,7 @@ void setup() {
     cam=new Capture(this,640,480);
   nya=new MultiMarker(this,width,height,"camera_para.dat",nyarConf);
   nya.addARMarker("patt.sample1",80);
-  nya.addARMarker("patt.kanji",80);
+  nya.addARMarker("patt.sample2",80);
   nya.setThreshold(THRESHOLD);
   nya.setConfidenceThreshold(CONFIDENCE_THRESHOLD);
   myframe = new PImage(width, height, RGB);
@@ -181,6 +188,8 @@ void drawXmlTreemap3D() {
   pushMatrix();
   translate(0, 0, -6.0f);
   fill(FLOOR_COLOR);
+  noStroke();
+  strokeWeight(0);
   box((float)TREEMAP_WIDTH, (float)TREEMAP_HEIGHT, 12.0f);
   popMatrix();
   
@@ -191,8 +200,18 @@ void drawXmlTreemap3D() {
 
 void drawModelCube() {
   fill(0,0,255);
-  translate(0,0,2.5);
-  box(600, 600, 5);
+  //translate(0,0,40);
+  //box(80, 80, 80);
+  
+  textMode(MODEL);
+  fill(255);
+  box(90, 90, -0.2);
+  textAlign(CENTER);
+  fill(0);
+  rotateZ(PI);
+  text(projectName, 0, 0);
+  textAlign(LEFT);
+  textMode(SCREEN);
 }
 
 void drawModel() {
@@ -222,6 +241,8 @@ void setCurrentVersion(int v) {
     v = maxVersion;
     
   if (g_currentVersion != v) {
+    previousVisitedVersion = g_currentVersion;
+    
     g_currentVersion = v;
     startTime = millis();
     startTweeningVersion = g_tweeningVersion;
@@ -269,7 +290,7 @@ void shadowedText(String str, float x, float y) {
 
 void drawText() {
   shadowedText(titleString, 10, 32);
-  shadowedText(commitLog.getAuthor() + "\nv" + g_firstVersion + "-v" + g_currentVersion + ": " + commitLog.getMessage(), 10, height - 30);
+  shadowedText(commitLog.getAuthor() + "\nv" + g_currentVersion + " of " + maxVersion + ": " + commitLog.getMessage(), 10, height - 30);
 }
 
 void draw()
@@ -311,7 +332,7 @@ void draw()
       drawModel();
     nya.endTransform();
   }
-  else {
+  else if (PERSISTENT_TREEMAP) {
     drawOnLastMarker();
   }
   
@@ -340,8 +361,8 @@ void mouseMoved() {
   if (id > -1 && id < g_treemapItems.size()) {
     ClassItem item = g_treemapItems.get(id);
     titleString = "[" + item.type + "] " + item.fullName;
-    if (!(item instanceof PackageItem))
-      titleString += "\nLOC:" + item.getIntForCurrentVersion("curr_loc") + " Δchurn: " + (item.getIntForCurrentVersion("churn") - item.firstChurn);
+    if (!(item instanceof PackageItem)) // Δ
+      titleString += "\nLOC:" + item.getIntForCurrentVersion("curr_loc") + " churn: " + (item.getIntForCurrentVersion("churn") - item.firstChurn);
   }
   else {
     titleString = "";
@@ -441,5 +462,14 @@ void keyPressed() {
   }
   else if (key == 'Z') {
     incZoomFactor(-0.1);
+  }
+  else if (key == 'e') {
+    setCurrentVersion(maxVersion);
+  }
+  else if (key == 8) {
+    setCurrentVersion(previousVisitedVersion);
+  }
+  else if (key == 'p') {
+    PERSISTENT_TREEMAP = !PERSISTENT_TREEMAP;
   }
 } 
