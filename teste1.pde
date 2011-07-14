@@ -370,7 +370,7 @@ void speak(String name) {
   String hyphenatedName = "";
   int i = 0;
   for (char c : name.toCharArray()) {
-    if (i > 0 && c > 'A' && c < 'Z')
+    if (i > 0 && c >= 'A' && c <= 'Z')
       hyphenatedName += "-";
     hyphenatedName += c;
     i++;
