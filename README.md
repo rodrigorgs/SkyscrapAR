@@ -5,6 +5,8 @@ Software visualization with augmented reality. Created by Rodrigo Souza and Brun
 
 Inspired by [CodeCity](http://www.inf.usi.ch/phd/wettel/codecity.html), by Richard Wettel and Michele Lanza from University of Lugano, Switzerland.
 
+See also [SkyscrapAR-extractor](https://github.com/rodrigorgs/SkyscrapAR-extractor), needed to create data files for SkyscrapAR.
+
 Demo
 ----
 
