@@ -175,7 +175,7 @@ class ClassItem extends SimpleMapItem {
     strokeWeight(1);
     fill(CLASS_FLOOR_COLOR);
     // box for largest version
-    boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, 0.02, CLASS_BASE_RATIO);
+    boxWithBounds(bounds.x, bounds.y, (level - 1) * PACKAGE_HEIGHT, bounds.w, bounds.h, 0.02, CLASS_BASE_RATIO);
     
     if (!HIDE_NON_SELECTED || this.isSelected()) {
       double churn = getCurrentTweenInt("churn") - firstChurn;
@@ -196,7 +196,7 @@ class ClassItem extends SimpleMapItem {
       picker.start(this.index);
       fill(hasChanged() ? CLASS_CHANGED_COLOR : this.currentColor);
       // box for selected version
-      boxWithBounds(bounds.x, bounds.y, level * PACKAGE_HEIGHT, bounds.w, bounds.h, boxHeight, CLASS_BASE_RATIO * currentFactor);
+      boxWithBounds(bounds.x, bounds.y, (level-1) * PACKAGE_HEIGHT, bounds.w, bounds.h, boxHeight, CLASS_BASE_RATIO * currentFactor);
     }
   }
 }

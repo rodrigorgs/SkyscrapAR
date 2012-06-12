@@ -1,6 +1,6 @@
-String INPUT_FILENAME = "awatility.xml";
+//String INPUT_FILENAME = "awatility.xml";
 //String INPUT_FILENAME = "prefuse.xml";
-//String INPUT_FILENAME = "junit.xml";
+String INPUT_FILENAME = "junit.xml";
 /*
 TODO list
 =========
@@ -28,7 +28,7 @@ DONE
 /////////// Configuration Variables ////////////////////
 ////////////////////////////////////////////////////////
 
-int THRESHOLD = 145; //45; //85; //110;
+int THRESHOLD = 80; //45; //85; //110;
 double CONFIDENCE_THRESHOLD = 0.51; // default: 0.51
 boolean DEBUG = false;
 
@@ -62,7 +62,7 @@ double CLASS_MAX_HEIGHT = (TREEMAP_WIDTH + TREEMAP_HEIGHT) * 0.6;
 boolean HIGHLIGHT_CHANGES_IS_CUMULATIVE = false;
 
 double TWEENING_TIME_INTERVAL = 1000; // milliseconds
-float zoomFactor = 1.0;
+float zoomFactor = 1.2;
 
 ////////////////////////////////////////////////////////
 ///////////////////// Imports //////////////////////////
