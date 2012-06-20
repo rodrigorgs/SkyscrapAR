@@ -428,6 +428,42 @@ void incZoomFactor(float amount) {
   setZoomFactor(zoomFactor + amount);
 }
 
+Set<ClassItem> getSelectedItems() {
+  Set<ClassItem> selected = new HashSet<ClassItem>();
+  for (ClassItem item : g_treemapItems) {
+    if (item.isSelected())
+      selected.add(item);
+  }
+  return selected;
+}
+
+void nextVersionThatChangedAnySelectedItem(int step) {
+  int v = g_currentVersion;
+  Set<ClassItem> selected = getSelectedItems();
+  
+  if (selected.size() == 0)
+    return;
+  
+  boolean found = false;
+  do {
+    v += step;
+    if (v > maxVersion)
+      v = maxVersion;
+    if (v < 1)
+      v = 1;
+      
+    for (ClassItem item : selected) {
+      if (item.hasChangedInVersion(v)) {
+        found = true;
+        break;
+      }
+    }
+  } while(!found && v < maxVersion && v > 1);
+  
+  if (found)
+    setCurrentVersion(v);
+}
+
 void keyPressed() {
   if (key == 'd')
     DEBUG = !DEBUG;
@@ -448,11 +484,13 @@ void keyPressed() {
   else if (key == ',') {
     setCurrentVersion(g_currentVersion - 1);
   }
-    else if (key == '>') {
-    setCurrentVersion(g_currentVersion + 10);
+  else if (key == '>') {
+    //setCurrentVersion(g_currentVersion + 10);
+    nextVersionThatChangedAnySelectedItem(1);
   }
   else if (key == '<') {
-    setCurrentVersion(g_currentVersion - 10);
+    //setCurrentVersion(g_currentVersion - 10);
+    nextVersionThatChangedAnySelectedItem(-1);
   }
   else if (key == 'c') {
     HIGHLIGHT_CHANGES_IS_CUMULATIVE = !HIGHLIGHT_CHANGES_IS_CUMULATIVE;

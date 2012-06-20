@@ -106,6 +106,10 @@ class ClassItem extends SimpleMapItem {
     return this.getSize();
   }
 
+  boolean hasChangedInVersion(int v) {
+    return getIntForVersion("changed", v) != 0;
+  }
+  
   boolean hasChanged() {
     if (g_currentVersion == g_firstVersion)
       return false;
@@ -177,7 +181,7 @@ class ClassItem extends SimpleMapItem {
     // box for largest version
     boxWithBounds(bounds.x, bounds.y, (level - 1) * PACKAGE_HEIGHT, bounds.w, bounds.h, 0.02, CLASS_BASE_RATIO);
     
-    if (!HIDE_NON_SELECTED || this.isSelected()) {
+    if (!HIDE_NON_SELECTED || this.isSelected() || this.hasChanged()) {
       double churn = getCurrentTweenInt("churn") - firstChurn;
 
       double boxHeight = CLASS_MIN_HEIGHT + (churn / g_maxChurn) * CLASS_MAX_HEIGHT;
