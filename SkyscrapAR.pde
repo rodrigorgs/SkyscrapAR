@@ -31,9 +31,13 @@ DONE
 int THRESHOLD = 80; //45; //85; //110;
 double CONFIDENCE_THRESHOLD = 0.51; // default: 0.51
 boolean DEBUG = false;
+boolean USE_OPENGL = false;
+boolean USE_CAM = true;
+int WINDOW_WIDTH = 1000; //640;
+int WINDOW_HEIGHT = 750; //480;
 
 boolean PERSISTENT_TREEMAP = false;
-boolean USE_CAM = true;
+
 boolean DRAW_MODELS = true;
 boolean FLIPPED_CAM = false;
 
@@ -73,7 +77,10 @@ import processing.video.*;
 import jp.nyatla.nyar4psg.*;
 import treemap.*;
 import picking.*;
-//import processing.opengl.*;
+
+//if (USE_OPENGL) {
+  import processing.opengl.*;
+//}
 
 ////////////////////////////////////////////////////////
 /////////// Global Variables ///////////////////////////
@@ -138,10 +145,10 @@ void loadTreemap() {
 }
 
 void setup() {
-  size(640,480,P3D);
+  size(WINDOW_WIDTH, WINDOW_HEIGHT, USE_OPENGL ? OPENGL : P3D);
   println(MultiMarker.VERSION);
   if (USE_CAM)
-    cam=new Capture(this,640,480);
+    cam=new Capture(this, WINDOW_WIDTH, WINDOW_HEIGHT);
   nya=new MultiMarker(this,width,height,"camera_para.dat",nyarConf);
   nya.addARMarker("patt.sample1",80);
   nya.addARMarker("patt.sample2",80);
@@ -331,6 +338,20 @@ void draw()
     nya.beginTransform(0);
     if (DRAW_MODELS)
       drawModel();
+    else if (DEBUG) {
+      int len = 80;
+      strokeWeight(4);
+      stroke(#CCCC00);
+      noFill();
+      rect(-len/2, -len/2, len, len);
+      strokeWeight(8);
+      stroke(#FF0000);
+      line(0, 0, 0, len, 0, 0);
+      stroke(#00FF00);
+      line(0, 0, 0, 0, len, 0);
+      stroke(#0000FF);
+      line(0, 0, 0, 0, 0, len);
+    }
     nya.endTransform();
   }
   else if (PERSISTENT_TREEMAP) {
