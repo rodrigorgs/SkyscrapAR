@@ -87,10 +87,14 @@ class ClassItem extends SimpleMapItem {
   }
 
   void toggleSelect() {
-    if (this.currentColor == CLASS_DEFAULT_COLOR)
+    if (this.currentColor == CLASS_DEFAULT_COLOR) {
       this.currentColor = CLASS_HIGHLIGHT_COLOR;
-    else
+      g_nSelectedItems += 1;
+    }
+    else {
       this.currentColor = CLASS_DEFAULT_COLOR;
+      g_nSelectedItems -= 1;
+    }
   }
 
   void boxWithBounds(double x, double y, double z, double w, double h, double zz, double baseRatio) {

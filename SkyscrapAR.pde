@@ -94,6 +94,7 @@ Treemap map;
 PackageItem mapModel;
 int globalIndex = 0;
 LinkedList<ClassItem> g_treemapItems = new LinkedList<ClassItem>();
+int g_nSelectedItems = 0;
 int g_currentVersion = 1;
 int g_firstVersion = 1;
 double g_tweeningVersion = g_currentVersion;
@@ -477,24 +478,7 @@ void keyPressed() {
   }
   else if (key == '-') {
     updateThreshold(THRESHOLD - 5);
-  }
-  else if (key == '.') {
-    setCurrentVersion(g_currentVersion + 1);
-  }
-  else if (key == ',') {
-    setCurrentVersion(g_currentVersion - 1);
-  }
-  else if (key == '>') {
-    //setCurrentVersion(g_currentVersion + 10);
-    nextVersionThatChangedAnySelectedItem(1);
-  }
-  else if (key == '<') {
-    //setCurrentVersion(g_currentVersion - 10);
-    nextVersionThatChangedAnySelectedItem(-1);
-  }
-  else if (key == 'c') {
-    HIGHLIGHT_CHANGES_IS_CUMULATIVE = !HIGHLIGHT_CHANGES_IS_CUMULATIVE;
-  }
+  }  
   else if (key == 'z') {
     incZoomFactor(0.1);
   }
@@ -510,4 +494,30 @@ void keyPressed() {
   else if (key == 'p') {
     PERSISTENT_TREEMAP = !PERSISTENT_TREEMAP;
   }
+  else if (key == 'n') {
+    for (ClassItem item : getSelectedItems())
+      item.toggleSelect();
+  }
+
+//  else if (key == 'c') {
+//    HIGHLIGHT_CHANGES_IS_CUMULATIVE = !HIGHLIGHT_CHANGES_IS_CUMULATIVE;
+//  }
+
+  if (g_nSelectedItems == 0) {
+    if (key == CODED && keyCode == RIGHT) {
+      setCurrentVersion(g_currentVersion + 1);
+    }
+    else if (key == CODED && keyCode == LEFT) {
+      setCurrentVersion(g_currentVersion - 1);
+    }
+  }
+  else {
+    if (key == CODED && keyCode == RIGHT) {
+      nextVersionThatChangedAnySelectedItem(1);
+    }
+    else if (key == CODED && keyCode == LEFT) {
+      nextVersionThatChangedAnySelectedItem(-1);
+    }
+  }
+
 } 
