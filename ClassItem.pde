@@ -202,7 +202,7 @@ class ClassItem extends SimpleMapItem {
       strokeWeight(hasChanged() ? 2.5 : 1);
       
       picker.start(this.index);
-      fill(hasChanged() ? CLASS_CHANGED_COLOR : this.currentColor);
+      fill(hasChanged() ? (isSelected() ? #FF6600 : CLASS_CHANGED_COLOR) : this.currentColor);
       // box for selected version
       boxWithBounds(bounds.x, bounds.y, (level-1) * PACKAGE_HEIGHT, bounds.w, bounds.h, boxHeight, CLASS_BASE_RATIO * currentFactor);
     }
