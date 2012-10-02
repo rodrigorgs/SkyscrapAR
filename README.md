@@ -15,11 +15,11 @@ You can see SkyscrapAR in action in the following video: http://www.youtube.com/
 Dependencies
 ------------
 
-To run SkyscrapAR, you'll need [Processing](http://processing.org/), an open source programming language and environment. You'll also need the following Processing plug-ins:
+To run SkyscrapAR, you'll need [Processing](http://processing.org/) 1.5.1 (it WON'T work with 2.0 or newer versions), an open source programming language and environment. You'll also need the following Processing plug-ins:
 
 * [NyARToolkit for Processing](http://sourceforge.jp/projects/nyartoolkit/releases/)
 * [Processing Picking Library](http://code.google.com/p/processing-picking-library/)
 * [ttslib](http://www.local-guru.net/blog/pages/ttslib)
 * [Treemap Library](http://benfry.com/writing/treemap/)
-* [Video Library](http://processing.org/reference/libraries/video/index.html)
 
+Windows/Linux users: see http://wiki.processing.org/w/Video_Issues
