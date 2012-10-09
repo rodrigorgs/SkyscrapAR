@@ -22,6 +22,8 @@ To run SkyscrapAR, you'll need [Processing](http://processing.org/) 1.5.1 (it WO
 * [ttslib](http://www.local-guru.net/blog/pages/ttslib)
 * [Treemap Library](http://benfry.com/writing/treemap/)
 
+For your convenience, the dependencies are available at http://app.dcc.ufba.br/~rodrigo/SkyscrapAR-deps.zip
+
 Windows/Linux users: see http://wiki.processing.org/w/Video_Issues
 
 Visualize your system
