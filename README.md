@@ -23,3 +23,10 @@ To run SkyscrapAR, you'll need [Processing](http://processing.org/) 1.5.1 (it WO
 * [Treemap Library](http://benfry.com/writing/treemap/)
 
 Windows/Linux users: see http://wiki.processing.org/w/Video_Issues
+
+Visualize your system
+---------------------
+
+SkyscrapAR comes with a XML file with metrics from the JUnit project. If you want to visualize your software project, you will need to extract its metrics using [SkyscrapAR-extractor](https://github.com/rodrigorgs/SkyscrapAR-extractor). 
+
+Your project needs to be in a Git repository. After extracting the metrics, rename the generated `SCMtoXML2.xml` file to `junit.xml` and copy it to the `data/` folder inside SkyscrapAR's root folder (overwrite the existing file).
