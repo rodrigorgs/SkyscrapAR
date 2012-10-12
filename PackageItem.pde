@@ -24,12 +24,12 @@ class PackageItem extends ClassItem implements MapModel {
     
     g_treemapItems.add(this);
 
-    XML[] contents = folder.getChildren();
+    XML[] contents = getNonTextElements(folder.getChildren());
     items = new Mappable[contents.length];
     int count = 0;
     for (int i = 0; i < contents.length; i++) {
-      
       XML elem = contents[i];
+
       ClassItem newItem = null;
       if (elem.getName().equals("class")) {
         newItem = new ClassItem(this, elem, level+1);

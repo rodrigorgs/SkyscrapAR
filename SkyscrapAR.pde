@@ -31,7 +31,7 @@ DONE
 int THRESHOLD = 80; //45; //85; //110;
 double CONFIDENCE_THRESHOLD = 0.51; // default: 0.51
 boolean DEBUG = false;
-boolean USE_OPENGL = false;
+boolean USE_OPENGL = true;
 boolean USE_CAM = true;
 int WINDOW_WIDTH = 640; //1000; //640;
 int WINDOW_HEIGHT = 480; //750; //480;
