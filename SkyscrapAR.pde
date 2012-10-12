@@ -31,7 +31,6 @@ DONE
 int THRESHOLD = 80; //45; //85; //110;
 double CONFIDENCE_THRESHOLD = 0.51; // default: 0.51
 boolean DEBUG = false;
-boolean USE_OPENGL = true;
 boolean USE_CAM = true;
 int WINDOW_WIDTH = 640; //1000; //640;
 int WINDOW_HEIGHT = 480; //750; //480;
@@ -78,9 +77,7 @@ import jp.nyatla.nyar4psg.*;
 import treemap.*;
 import picking.*;
 
-//if (USE_OPENGL) {
-  import processing.opengl.*;
-//}
+import processing.opengl.*;
 
 ////////////////////////////////////////////////////////
 /////////// Global Variables ///////////////////////////
@@ -115,7 +112,7 @@ int previousVisitedVersion = g_firstVersion;
 TTS tts;
 Announcer announcer = null;
 String titleString = "";
-Picker picker;
+//Picker picker;
 
 
 ////////////////////////////////////////////////////////
@@ -145,7 +142,7 @@ void loadTreemap() {
 }
 
 void setup() {
-  size(WINDOW_WIDTH, WINDOW_HEIGHT, USE_OPENGL ? OPENGL : P3D);
+  size(WINDOW_WIDTH, WINDOW_HEIGHT);
   println(MultiMarker.VERSION);
   if (USE_CAM)
     cam=new Capture(this, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -159,7 +156,7 @@ void setup() {
   println("default confidence: " + MultiMarker.DEFAULT_CF_THRESHOLD);
 
   loadTreemap();
-  picker = new Picker(this);
+//  picker = new Picker(this);
   
   tts = new TTS();
   
@@ -189,7 +186,7 @@ void flipScreen() {
 //*******************************************************/
 
 void drawXmlTreemap3D() {
-  picker.start(32767);
+//  picker.start(32767);
   lights();
   noStroke();
   
@@ -380,16 +377,16 @@ void mouseMoved() {
   if (FLIPPED_CAM)
     x = width - x;
     
-  int id = picker.get(x, y);
-  if (id > -1 && id < g_treemapItems.size()) {
-    ClassItem item = g_treemapItems.get(id);
-    titleString = "[" + item.type + "] " + item.fullName;
-    if (!(item instanceof PackageItem)) // Δ
-      titleString += "\nLOC:" + item.getIntForCurrentVersion("curr_loc") + " churn: " + (item.getIntForCurrentVersion("churn") - item.firstChurn);
-  }
-  else {
-    titleString = "";
-  }
+//  int id = picker.get(x, y);
+//  if (id > -1 && id < g_treemapItems.size()) {
+//    ClassItem item = g_treemapItems.get(id);
+//    titleString = "[" + item.type + "] " + item.fullName;
+//    if (!(item instanceof PackageItem)) // Δ
+//      titleString += "\nLOC:" + item.getIntForCurrentVersion("curr_loc") + " churn: " + (item.getIntForCurrentVersion("churn") - item.firstChurn);
+//  }
+//  else {
+//    titleString = "";
+//  }
 }
 
 void mouseClicked() {
@@ -398,16 +395,16 @@ void mouseClicked() {
   if (FLIPPED_CAM)
     x = width - x;
     
-  int id = picker.get(x, y);
-  if (id > -1 && id < g_treemapItems.size()) {
-    ClassItem item = g_treemapItems.get(id);
-    if (!(item instanceof PackageItem)) {
-      item.toggleSelect();
-      println("" + id + ": " + item.name + " level=" + item.level);
-      if (item.isSelected())
-        speak(item.name);
-    }
-  }  
+//  int id = picker.get(x, y);
+//  if (id > -1 && id < g_treemapItems.size()) {
+//    ClassItem item = g_treemapItems.get(id);
+//    if (!(item instanceof PackageItem)) {
+//      item.toggleSelect();
+//      println("" + id + ": " + item.name + " level=" + item.level);
+//      if (item.isSelected())
+//        speak(item.name);
+//    }
+//  }  
 }
 
 void speak(String name) {

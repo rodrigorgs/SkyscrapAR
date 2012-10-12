@@ -78,7 +78,7 @@ class PackageItem extends ClassItem implements MapModel {
   void draw() {
     checkLayout();
     
-    picker.start(this.index);
+//    picker.start(this.index);
     // TODO: draw the package (a quarter)
     Rect bounds = this.getBounds();
     strokeWeight(1);
