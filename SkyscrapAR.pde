@@ -33,8 +33,8 @@ double CONFIDENCE_THRESHOLD = 0.51; // default: 0.51
 boolean DEBUG = false;
 boolean USE_OPENGL = false;
 boolean USE_CAM = true;
-int WINDOW_WIDTH = 1000; //640;
-int WINDOW_HEIGHT = 750; //480;
+int WINDOW_WIDTH = 640; //1000; //640;
+int WINDOW_HEIGHT = 480; //750; //480;
 
 boolean PERSISTENT_TREEMAP = false;
 
@@ -129,9 +129,9 @@ void loadTreemap() {
   MapLayout algorithm = new PivotBySplitSize(); // default
   //MapLayout algorithm = new SquarifiedLayout();
 
-  XMLElement elem = new XMLElement(this, INPUT_FILENAME);
-  XMLElement elemCode = elem.getChild("CodeInfo");
-  XMLElement elemLog = elem.getChild("LogInfo");
+  XML elem = loadXML(INPUT_FILENAME);
+  XML elemCode = elem.getChild("CodeInfo");
+  XML elemLog = elem.getChild("LogInfo");
   projectName = elem.getString("name");
   
   mapModel = new PackageItem(null, elemCode, 0);
@@ -217,7 +217,8 @@ void drawModelCube() {
   textAlign(CENTER);
   fill(0);
   rotateZ(PI);
-  text(projectName, 0, 0);
+  //text(projectName, 0, 0);
+  text("SEMCOMP", 0, 0);
   textAlign(LEFT);
   textMode(SCREEN);
 }
@@ -420,8 +421,8 @@ void speak(String name) {
   }
   
   println("Speak " + hyphenatedName);
-  announcer = new Announcer(hyphenatedName);
-  announcer.start();
+//  announcer = new Announcer(hyphenatedName);
+//  announcer.start();
 }
 
 void updateThreshold(int newThreshold) {

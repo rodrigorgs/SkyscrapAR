@@ -14,12 +14,12 @@ class ClassItem extends SimpleMapItem {
   
   PackageItem parent;
   int level;
-  XMLElement xmlElement;
+  XML xmlElement;
   
   ClassItem() {
   }
 
-  ClassItem(PackageItem parent, XMLElement elem, int level) {
+  ClassItem(PackageItem parent, XML elem, int level) {
     this.type = elem.getString("type");
     this.parent = parent;
     this.xmlElement = elem;
@@ -35,7 +35,7 @@ class ClassItem extends SimpleMapItem {
     g_treemapItems.add(this);
     
     int maxloc = 0;
-    XMLElement[] versions = elem.getChildren();
+    XML[] versions = elem.getChildren();
     int lastVersion = versions[versions.length-1].getInt("num");
     println("lastVersion = " + lastVersion);
     
@@ -48,7 +48,7 @@ class ClassItem extends SimpleMapItem {
     int lastNum = -1;
     int lastLoc = 0;
     int lastChurn = 0;
-    for (XMLElement version : versions) {
+    for (XML version : versions) {
       int num = version.getInt("num") - 1;
       
       locs[num] = version.getInt("curr_loc");

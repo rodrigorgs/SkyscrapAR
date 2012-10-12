@@ -1,12 +1,12 @@
 class CommitLog {
-  XMLElement elem;
+  XML elem;
   
-  public CommitLog(XMLElement elem) {
+  public CommitLog(XML elem) {
     this.elem = elem;
   }
   
-  XMLElement getVersion(int version) {
-    XMLElement[] children = this.elem.getChildren();
+  XML getVersion(int version) {
+    XML[] children = this.elem.getChildren();
     if (version > children.length)
       version = children.length;
     else if (version < 1)
